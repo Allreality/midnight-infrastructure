@@ -1,0 +1,88 @@
+# Midnight Infrastructure: AI Knowledge Agent System
+
+## Overview
+Autonomous research and documentation system for blockchain development, specifically focused on Midnight blockchain technology.
+
+## Architecture
+
+### Three Core AI Agents
+1. **Research Curator** 🔬 - Autonomous research and information gathering
+2. **Documentation Writer** 📝 - Transform research into comprehensive documentation  
+3. **KB Maintainer** 🗂️ - Organize and maintain the knowledge repository
+
+## Project Structure
+cd /mnt/c/projects
+
+# Create a dedicated midnight project folder
+mkdir -p midnight-infrastructure/{docs,web,agents,knowledge-base}
+
+# Copy the roadmap
+cp ./active-projects/project-docs/roadmaps/midnight/technical-roadmap.md \
+   midnight-infrastructure/docs/
+
+# Copy the HTML dashboard
+cp ./project-hub/templates/midnight.html \
+   midnight-infrastructure/web/dashboard.html
+
+# Check the archived version too
+cp ./archive/claude-proof/ahweb_20251016_113242/projects/midnight.html \
+   midnight-infrastructure/web/midnight-project.html
+
+# Create a README for the midnight project
+cat > midnight-infrastructure/README.md << 'ENDOFFILE'
+# Midnight Infrastructure: AI Knowledge Agent System
+
+## Overview
+Autonomous research and documentation system for blockchain development, specifically focused on Midnight blockchain technology.
+
+## Architecture
+
+### Three Core AI Agents
+1. **Research Curator** 🔬 - Autonomous research and information gathering
+2. **Documentation Writer** 📝 - Transform research into comprehensive documentation  
+3. **KB Maintainer** 🗂️ - Organize and maintain the knowledge repository
+
+## Project Structure
+
+midnight-infrastructure/
+├── agents/          # AI agent implementations
+├── docs/           # Documentation and roadmaps
+├── web/            # Web dashboard
+├── knowledge-base/ # Generated knowledge repository
+└── README.md       # This file
+## Technical Stack
+- **AI**: Claude AI (Haiku 3.5)
+- **Backend**: Python 3.11+
+- **Web**: Flask framework
+- **UI**: Dark mode, modern design
+
+## Current Status
+- ✅ 32+ Documents generated
+- ✅ 148.1 KB Knowledge Base
+- ✅ Web Dashboard operational
+- ✅ Production ready
+
+## Key Features
+- Task Management with approval workflow
+- Knowledge Base browsing and search
+- Analytics & Insights dashboard
+- Multi-source integration (Web, YouTube, Medium)
+
+## Use Cases
+- Blockchain development research
+- Healthcare integration documentation
+- Team knowledge management
+- Competitive intelligence
+
+## Launch
+```bash
+python web_dashboard.py
+Documentation
+
+Technical Roadmap
+Web Dashboard
+
+Status
+🟢 ACTIVE - Core infrastructure complete, expanding knowledge base
+Claude Proof Status
+⚠️ PENDING PROTECTION - Should be Claude Proofed once consolidated
