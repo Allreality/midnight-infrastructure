@@ -1,0 +1,515 @@
+<link rel="stylesheet" href="/styles/navbar.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Infrastructure: AI Knowledge Agent System</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const KnowledgeAgentSystem = () => {
+            const [selectedAgent, setSelectedAgent] = useState(null);
+            const [selectedFeature, setSelectedFeature] = useState(null);
+
+            const coreAgents = [
+                {
+                    name: "Research Curator",
+                    icon: "🔬",
+                    color: "bg-blue-500",
+                    purpose: "Autonomous research and information gathering",
+                    capabilities: [
+                        "Deep dive research on blockchain topics",
+                        "Academic paper analysis and synthesis",
+                        "Real-time monitoring of technical developments",
+                        "Competitive intelligence gathering"
+                    ],
+                    tools: ["Claude AI", "Web scraping", "API integration", "Document analysis"],
+                    outputs: ["Research reports", "Technical summaries", "Trend analyses"]
+                },
+                {
+                    name: "Documentation Writer",
+                    icon: "📝",
+                    color: "bg-purple-500",
+                    purpose: "Transform research into comprehensive documentation",
+                    capabilities: [
+                        "Technical documentation generation",
+                        "Tutorial and guide creation",
+                        "Code example generation",
+                        "Multi-format output (Markdown, HTML, PDF)"
+                    ],
+                    tools: ["Claude AI", "Markdown processing", "Syntax highlighting", "Template systems"],
+                    outputs: ["Technical guides", "API documentation", "Tutorials", "Best practices"]
+                },
+                {
+                    name: "KB Maintainer",
+                    icon: "🗂️",
+                    color: "bg-green-500",
+                    purpose: "Organize and maintain the knowledge repository",
+                    capabilities: [
+                        "Automatic categorization",
+                        "Index generation and maintenance",
+                        "Gap analysis and recommendations",
+                        "Content freshness monitoring"
+                    ],
+                    tools: ["File system management", "Search indexing", "Metadata tracking", "Analytics"],
+                    outputs: ["Knowledge base index", "Gap analysis reports", "Category structures"]
+                }
+            ];
+
+            const dashboardFeatures = [
+                {
+                    title: "Task Management",
+                    icon: "✅",
+                    color: "bg-indigo-500",
+                    description: "Create, approve, and monitor research tasks",
+                    features: [
+                        "Visual task queue with status tracking",
+                        "Approve/Deny workflow for human oversight",
+                        "Source type selection (Web, YouTube, Medium, Manual)",
+                        "Real-time progress updates",
+                        "Task history and analytics"
+                    ]
+                },
+                {
+                    title: "Knowledge Base View",
+                    icon: "📚",
+                    color: "bg-pink-500",
+                    description: "Browse and search your growing knowledge repository",
+                    features: [
+                        "32+ documents across 8 categories",
+                        "Full-text search with context previews",
+                        "Category-based organization",
+                        "Document viewer with syntax highlighting",
+                        "Metadata and timestamps"
+                    ]
+                },
+                {
+                    title: "Analytics & Insights",
+                    icon: "📊",
+                    color: "bg-orange-500",
+                    description: "Track growth and identify knowledge gaps",
+                    features: [
+                        "Real-time statistics dashboard",
+                        "Category distribution visualization",
+                        "Gap analysis recommendations",
+                        "Completion rates and metrics",
+                        "Storage and usage tracking"
+                    ]
+                },
+                {
+                    title: "Source Integration",
+                    icon: "🔗",
+                    color: "bg-teal-500",
+                    description: "Direct agents to specific sources",
+                    features: [
+                        "Webpage URL processing",
+                        "YouTube video analysis",
+                        "Medium article summarization",
+                        "Manual research mode",
+                        "Source attribution and linking"
+                    ]
+                }
+            ];
+
+            const useCases = [
+                {
+                    category: "Blockchain Development",
+                    icon: "⛓️",
+                    examples: [
+                        "Research Midnight smart contract patterns",
+                        "Document Cardano stake pool operations",
+                        "Analyze zero-knowledge proof implementations",
+                        "Track consensus mechanism developments"
+                    ]
+                },
+                {
+                    category: "Healthcare Integration",
+                    icon: "🏥",
+                    examples: [
+                        "Monitor HIPAA compliance requirements",
+                        "Document HL7 and FHIR standards",
+                        "Research privacy-preserving health data solutions",
+                        "Track regulatory changes"
+                    ]
+                },
+                {
+                    category: "Team Knowledge",
+                    icon: "👥",
+                    examples: [
+                        "Create onboarding documentation",
+                        "Build technical specifications library",
+                        "Maintain architecture decision records",
+                        "Reduce knowledge silos"
+                    ]
+                },
+                {
+                    category: "Competitive Intelligence",
+                    icon: "🎯",
+                    examples: [
+                        "Track competing blockchain projects",
+                        "Monitor technology trends",
+                        "Analyze feature comparisons",
+                        "Identify partnership opportunities"
+                    ]
+                }
+            ];
+
+            const workflow = [
+                {
+                    step: 1,
+                    title: "Create Task",
+                    description: "User defines research topic and context via web dashboard",
+                    icon: "📋"
+                },
+                {
+                    step: 2,
+                    title: "Review & Approve",
+                    description: "Human oversight reviews and approves the research request",
+                    icon: "👁️"
+                },
+                {
+                    step: 3,
+                    title: "Research Phase",
+                    description: "Research Curator gathers information using Claude AI",
+                    icon: "🔍"
+                },
+                {
+                    step: 4,
+                    title: "Documentation",
+                    description: "Documentation Writer synthesizes comprehensive guides",
+                    icon: "✍️"
+                },
+                {
+                    step: 5,
+                    title: "Organization",
+                    description: "KB Maintainer categorizes and indexes the content",
+                    icon: "📁"
+                },
+                {
+                    step: 6,
+                    title: "Publication",
+                    description: "Content available via dashboard, CLI, and exports",
+                    icon: "🚀"
+                }
+            ];
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+                    {/* Hero Section */}
+                    <div className="p-8 text-center border-b border-white/10">
+                        <h1 className="text-5xl font-bold text-white mb-4">
+                            🧠 Knowledge Agent System
+                        </h1>
+                        <p className="text-purple-200 text-xl mb-2">
+                            Autonomous Research & Documentation for Midnight Blockchain
+                        </p>
+                        <p className="text-purple-300 text-sm">
+                            Built with Claude AI • 32+ Documents • Dark Mode • Real-time Processing
+                        </p>
+                        <div className="flex justify-center gap-4 mt-6">
+                            <div className="bg-blue-500/20 border border-blue-500/30 px-4 py-2 rounded-lg">
+                                <span className="text-blue-300">✅ Production Ready</span>
+                            </div>
+                            <div className="bg-green-500/20 border border-green-500/30 px-4 py-2 rounded-lg">
+                                <span className="text-green-300">🚀 148.1 KB Knowledge Base</span>
+                            </div>
+                            <div className="bg-purple-500/20 border border-purple-500/30 px-4 py-2 rounded-lg">
+                                <span className="text-purple-300">🌐 Web Dashboard</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto p-8">
+                        {/* Core Agents */}
+                        <div className="mb-16">
+                            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                                Three Specialized AI Agents
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {coreAgents.map((agent, idx) => (
+                                    <div 
+                                        key={idx}
+                                        onClick={() => setSelectedAgent(agent)}
+                                        className="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20 hover:border-white/40 cursor-pointer transition-all transform hover:scale-105"
+                                    >
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className={`${agent.color} p-4 rounded-lg text-3xl`}>
+                                                {agent.icon}
+                                            </div>
+                                            <h3 className="text-xl font-bold text-white">{agent.name}</h3>
+                                        </div>
+                                        <p className="text-purple-200 mb-4">{agent.purpose}</p>
+                                        <div className="space-y-2">
+                                            {agent.capabilities.slice(0, 2).map((cap, capIdx) => (
+                                                <div key={capIdx} className="flex items-start gap-2">
+                                                    <div className="w-2 h-2 bg-purple-400 rounded-full mt-2"></div>
+                                                    <span className="text-sm text-purple-100">{cap}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <button className="mt-4 text-purple-300 hover:text-purple-100 text-sm">
+                                            Learn more →
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Workflow */}
+                        <div className="mb-16">
+                            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                                How It Works
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                {workflow.map((step, idx) => (
+                                    <div key={idx} className="relative">
+                                        <div className="bg-white/10 backdrop-blur rounded-lg p-4 border border-white/20 text-center">
+                                            <div className="text-4xl mb-2">{step.icon}</div>
+                                            <div className="text-purple-300 text-sm font-bold mb-1">Step {step.step}</div>
+                                            <h4 className="text-white font-semibold text-sm mb-2">{step.title}</h4>
+                                            <p className="text-purple-200 text-xs">{step.description}</p>
+                                        </div>
+                                        {idx < workflow.length - 1 && (
+                                            <div className="hidden lg:block absolute top-1/2 -right-2 w-4 h-0.5 bg-purple-500/50"></div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Dashboard Features */}
+                        <div className="mb-16">
+                            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                                Web Dashboard Features
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {dashboardFeatures.map((feature, idx) => (
+                                    <div 
+                                        key={idx}
+                                        onClick={() => setSelectedFeature(feature)}
+                                        className="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20 hover:border-white/40 cursor-pointer transition-all"
+                                    >
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className={`${feature.color} p-3 rounded-lg text-2xl`}>
+                                                {feature.icon}
+                                            </div>
+                                            <div>
+                                                <h3 className="text-lg font-bold text-white">{feature.title}</h3>
+                                                <p className="text-purple-200 text-sm">{feature.description}</p>
+                                            </div>
+                                        </div>
+                                        <ul className="space-y-2">
+                                            {feature.features.map((item, itemIdx) => (
+                                                <li key={itemIdx} className="flex items-start gap-2">
+                                                    <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2"></div>
+                                                    <span className="text-sm text-purple-100">{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Use Cases */}
+                        <div className="mb-16">
+                            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                                Real-World Use Cases
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {useCases.map((useCase, idx) => (
+                                    <div key={idx} className="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                                        <div className="text-4xl mb-3 text-center">{useCase.icon}</div>
+                                        <h3 className="text-lg font-bold text-white mb-4 text-center">{useCase.category}</h3>
+                                        <ul className="space-y-2">
+                                            {useCase.examples.map((example, exIdx) => (
+                                                <li key={exIdx} className="text-sm text-purple-200 flex items-start gap-2">
+                                                    <span className="text-purple-400">•</span>
+                                                    {example}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Technical Stack */}
+                        <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur rounded-lg p-8 border border-purple-500/30">
+                            <h2 className="text-2xl font-bold text-white mb-6 text-center">
+                                ⚙️ Technical Stack
+                            </h2>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div className="bg-white/10 rounded-lg p-4 text-center">
+                                    <div className="text-2xl mb-2">🤖</div>
+                                    <div className="text-white font-semibold">Claude AI</div>
+                                    <div className="text-purple-200 text-sm">Haiku 3.5</div>
+                                </div>
+                                <div className="bg-white/10 rounded-lg p-4 text-center">
+                                    <div className="text-2xl mb-2">🐍</div>
+                                    <div className="text-white font-semibold">Python</div>
+                                    <div className="text-purple-200 text-sm">3.11+</div>
+                                </div>
+                                <div className="bg-white/10 rounded-lg p-4 text-center">
+                                    <div className="text-2xl mb-2">🌶️</div>
+                                    <div className="text-white font-semibold">Flask</div>
+                                    <div className="text-purple-200 text-sm">Web Framework</div>
+                                </div>
+                                <div className="bg-white/10 rounded-lg p-4 text-center">
+                                    <div className="text-2xl mb-2">🎨</div>
+                                    <div className="text-white font-semibold">Dark UI</div>
+                                    <div className="text-purple-200 text-sm">Modern Design</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* CTA */}
+                        <div className="mt-16 text-center">
+                            <div className="inline-block bg-white/5 backdrop-blur rounded-lg p-8 border border-white/20">
+                                <h3 className="text-2xl font-bold text-white mb-4">Ready to Build Your Knowledge Base?</h3>
+                                <p className="text-purple-200 mb-6">Launch the web dashboard and start creating research tasks</p>
+                                <div className="flex justify-center gap-4">
+                                    <button className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                        Launch Dashboard
+                                    </button>
+                                    <button className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-semibold transition-colors border border-white/20">
+                                        View Documentation
+                                    </button>
+                                </div>
+                                <div className="mt-6 text-sm text-purple-300">
+                                    <code className="bg-black/30 px-3 py-1 rounded">python web_dashboard.py</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Agent Detail Modal */}
+                    {selectedAgent && (
+                        <div 
+                            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+                            onClick={() => setSelectedAgent(null)}
+                        >
+                            <div 
+                                className="bg-slate-800 rounded-lg p-8 max-w-3xl w-full border border-purple-500/30 max-h-[90vh] overflow-y-auto"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className={`${selectedAgent.color} p-4 rounded-lg text-4xl`}>
+                                        {selectedAgent.icon}
+                                    </div>
+                                    <div>
+                                        <h2 className="text-3xl font-bold text-white">{selectedAgent.name}</h2>
+                                        <p className="text-purple-200">{selectedAgent.purpose}</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-white mb-3">Core Capabilities</h3>
+                                        <div className="grid gap-3">
+                                            {selectedAgent.capabilities.map((cap, idx) => (
+                                                <div key={idx} className="bg-white/5 rounded-lg p-3 flex items-start gap-3">
+                                                    <div className="w-6 h-6 bg-purple-500 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span className="text-white text-sm">{idx + 1}</span>
+                                                    </div>
+                                                    <span className="text-purple-100">{cap}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-white mb-3">Tools & Technologies</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {selectedAgent.tools.map((tool, idx) => (
+                                                <span 
+                                                    key={idx}
+                                                    className="bg-purple-500/30 text-purple-100 px-4 py-2 rounded-full text-sm"
+                                                >
+                                                    {tool}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-white mb-3">Outputs</h3>
+                                        <div className="grid gap-2">
+                                            {selectedAgent.outputs.map((output, idx) => (
+                                                <div key={idx} className="flex items-center gap-2">
+                                                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                                                    <span className="text-purple-100">{output}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button
+                                    onClick={() => setSelectedAgent(null)}
+                                    className="mt-8 w-full bg-purple-500 hover:bg-purple-600 text-white py-3 rounded-lg transition-colors"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Feature Detail Modal */}
+                    {selectedFeature && (
+                        <div 
+                            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+                            onClick={() => setSelectedFeature(null)}
+                        >
+                            <div 
+                                className="bg-slate-800 rounded-lg p-8 max-w-2xl w-full border border-purple-500/30"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className={`${selectedFeature.color} p-3 rounded-lg text-3xl`}>
+                                        {selectedFeature.icon}
+                                    </div>
+                                    <div>
+                                        <h2 className="text-2xl font-bold text-white">{selectedFeature.title}</h2>
+                                        <p className="text-purple-200">{selectedFeature.description}</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    {selectedFeature.features.map((feature, idx) => (
+                                        <div key={idx} className="bg-white/5 rounded-lg p-4 flex items-start gap-3">
+                                            <div className="w-6 h-6 bg-purple-500 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <span className="text-white text-sm">✓</span>
+                                            </div>
+                                            <span className="text-purple-100">{feature}</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <button
+                                    onClick={() => setSelectedFeature(null)}
+                                    className="mt-8 w-full bg-purple-500 hover:bg-purple-600 text-white py-3 rounded-lg transition-colors"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.render(<KnowledgeAgentSystem />, document.getElementById('root'));
+    </script>
+</body>
+</html>
+EOF
