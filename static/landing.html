@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Midnight Compliance Infrastructure</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial; 
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #fff; 
+            margin: 0;
+            padding: 0;
+        }
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        h1 { font-size: 3.5em; margin: 0; }
+        .subtitle { font-size: 1.5em; margin: 20px 0; opacity: 0.9; }
+        .features {
+            max-width: 1200px;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+        .feature-card {
+            background: #1a1f3a;
+            padding: 40px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        .pricing {
+            max-width: 1200px;
+            margin: 80px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+        .tier-card {
+            background: #1a1f3a;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .tier-card:hover { transform: translateY(-10px); }
+        .tier-card.featured {
+            border: 3px solid #667eea;
+            background: linear-gradient(135deg, #1a1f3a 0%, #667eea 100%);
+        }
+        .price { font-size: 3em; color: #667eea; margin: 20px 0; }
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            margin: 20px;
+            transition: all 0.3s;
+        }
+        .cta-button:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🌙 Midnight Compliance Infrastructure</h1>
+        <p class="subtitle">Enterprise-Grade Blockchain Compliance for Regulated Industries</p>
+        <p>Powered by Claude AI • Built on Midnight Network • ADA-Based Access</p>
+        <a href="#pricing" class="cta-button">Get Started</a>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <h2>📚 135+ Compliance Documents</h2>
+            <p>Industry-specific guides for Healthcare, Finance, Logistics, Government, and more</p>
+        </div>
+        <div class="feature-card">
+            <h2>🤖 AI-Powered Agents</h2>
+            <p>Autonomous documentation and workflow generation using Claude</p>
+        </div>
+        <div class="feature-card">
+            <h2>🔐 Privacy-First Architecture</h2>
+            <p>Zero-knowledge proofs and selective disclosure for regulatory compliance</p>
+        </div>
+        <div class="feature-card">
+            <h2>⚡ Reproducible Workflows</h2>
+            <p>Battle-tested templates for HIPAA, GDPR, SOX, and ISO compliance</p>
+        </div>
+        <div class="feature-card">
+            <h2>💰 ADA-Based Access</h2>
+            <p>Simple subscription model using Cardano blockchain</p>
+        </div>
+        <div class="feature-card">
+            <h2>🏢 Enterprise Ready</h2>
+            <p>White-label deployment, custom modules, 24/7 support</p>
+        </div>
+    </div>
+
+    <div id="pricing" class="pricing">
+        <div class="tier-card">
+            <h2>Community</h2>
+            <p class="price">FREE</p>
+            <ul style="text-align: left;">
+                <li>10 documents/month</li>
+                <li>Public guides</li>
+                <li>Community Discord</li>
+                <li>100 API calls/day</li>
+            </ul>
+            <a href="/signup/free" class="cta-button">Start Free</a>
+        </div>
+        
+        <div class="tier-card featured">
+            <h2>Professional</h2>
+            <p class="price">500 ADA<span style="font-size:0.3em">/month</span></p>
+            <ul style="text-align: left;">
+                <li>Full documentation access</li>
+                <li>Compliance templates</li>
+                <li>Priority support</li>
+                <li>1000 API calls/day</li>
+                <li>Custom agent configs</li>
+            </ul>
+            <a href="/signup/pro" class="cta-button">Subscribe</a>
+        </div>
+        
+        <div class="tier-card">
+            <h2>Enterprise</h2>
+            <p class="price">5000 ADA<span style="font-size:0.3em">/month</span></p>
+            <ul style="text-align: left;">
+                <li>Unlimited access</li>
+                <li>White-label deployment</li>
+                <li>Custom modules</li>
+                <li>Dedicated agents</li>
+                <li>24/7 support</li>
+            </ul>
+            <a href="/contact" class="cta-button">Contact Sales</a>
+        </div>
+    </div>
+
+    <div style="text-align:center; padding:80px 20px;">
+        <h2>Ready to Build Compliant Blockchain Solutions?</h2>
+        <a href="#pricing" class="cta-button">Get Started Today</a>
+    </div>
+</body>
+</html>

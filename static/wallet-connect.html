@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subscribe - Midnight Infrastructure</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial; 
+            background: #0a0e27; 
+            color: #fff; 
+            padding: 20px;
+            margin: 0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .tier-card {
+            background: #1a1f3a;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+        .price { font-size: 2.5em; color: #667eea; margin: 10px 0; }
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .wallet-btn {
+            background: #1a1f3a;
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            color: #fff;
+        }
+        .wallet-btn:hover {
+            background: #667eea;
+            transform: translateY(-5px);
+        }
+        .wallet-btn img { width: 50px; height: 50px; margin-bottom: 10px; }
+        button {
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin: 10px 0;
+        }
+        button:hover { background: #764ba2; }
+        button:disabled { background: #4a5568; cursor: not-allowed; }
+        .success { background: #10b981; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .error { background: #ef4444; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .info { background: #3b82f6; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .warning { background: #f59e0b; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .connected {
+            background: #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        code { 
+            background: #0a0e27; 
+            padding: 5px 10px; 
+            border-radius: 5px; 
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌙 Subscribe to Midnight Infrastructure</h1>
+            <p>Professional Tier - 500 ADA/month</p>
+        </div>
+
+        <div class="tier-card">
+            <h2>What You Get:</h2>
+            <ul>
+                <li>✅ Full documentation access (135+ docs)</li>
+                <li>✅ Healthcare, Finance, Logistics, Government compliance</li>
+                <li>✅ Compliance workflow templates</li>
+                <li>✅ Priority API access (1000 calls/day)</li>
+                <li>✅ Custom agent configurations</li>
+                <li>✅ Priority support</li>
+            </ul>
+        </div>
+
+        <div class="tier-card">
+            <h2>Step 1: Connect Your Wallet</h2>
+            <p>Choose your Cardano wallet:</p>
+            
+            <div class="wallet-grid">
+                <div class="wallet-btn" onclick="connectWallet('nami')">
+                    <div style="font-size: 40px;">👛</div>
+                    <div>Nami</div>
+                </div>
+                <div class="wallet-btn" onclick="connectWallet('eternl')">
+                    <div style="font-size: 40px;">⚡</div>
+                    <div>Eternl</div>
+                </div>
+                <div class="wallet-btn" onclick="connectWallet('flint')">
+                    <div style="font-size: 40px;">🔥</div>
+                    <div>Flint</div>
+                </div>
+                <div class="wallet-btn" onclick="connectWallet('lace')">
+                    <div style="font-size: 40px;">🎴</div>
+                    <div>Lace</div>
+                </div>
+            </div>
+
+            <div id="walletStatus"></div>
+        </div>
+
+        <div class="tier-card" id="paymentSection" style="display:none;">
+            <h2>Step 2: Send Payment</h2>
+            <div class="info">
+                <strong>Treasury Address:</strong><br>
+                <code id="treasuryAddress">Loading...</code>
+            </div>
+            
+            <button id="sendPaymentBtn" onclick="sendPayment()" disabled>
+                Send 500 ADA
+            </button>
+            
+            <div id="paymentStatus"></div>
+        </div>
+
+        <div class="tier-card" id="verificationSection" style="display:none;">
+            <h2>Step 3: Verify & Activate</h2>
+            <button onclick="verifyAndActivate()">
+                Verify Payment & Activate Subscription
+            </button>
+            <div id="verificationStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        let wallet = null;
+        let walletAPI = null;
+        let connectedAddress = null;
+        let txHash = null;
+
+        const TREASURY_ADDRESS = 'addr1q9np4m2eg4xtr8kn6mvccwklpv6a7kxhq8uqkk45gpd2tz326xxqn233h4a3lf5yv3utg7lwlg0vheasx9zjvzyfy8kqs0gpcx';
+
+        async function connectWallet(walletName) {
+            const statusDiv = document.getElementById('walletStatus');
+            
+            try {
+                statusDiv.innerHTML = '<div class="info">⏳ Connecting to ' + walletName + '...</div>';
+
+                // Check if wallet is installed
+                if (!window.cardano || !window.cardano[walletName]) {
+                    statusDiv.innerHTML = '<div class="error">❌ ' + walletName.charAt(0).toUpperCase() + walletName.slice(1) + ' wallet not found. Please install it first.</div>';
+                    return;
+                }
+
+                // Enable wallet
+                walletAPI = await window.cardano[walletName].enable();
+                wallet = walletName;
+
+                // Get wallet address
+                const addresses = await walletAPI.getUsedAddresses();
+                if (addresses && addresses.length > 0) {
+                    // Convert hex to bech32 address (simplified - in production use proper library)
+                    connectedAddress = addresses[0];
+                    
+                    statusDiv.innerHTML = `
+                        <div class="connected">
+                            ✅ Connected to ${walletName.charAt(0).toUpperCase() + walletName.slice(1)}!<br>
+                            <small>Address: ${connectedAddress.substring(0, 20)}...</small>
+                        </div>
+                    `;
+
+                    // Show payment section
+                    document.getElementById('paymentSection').style.display = 'block';
+                    document.getElementById('sendPaymentBtn').disabled = false;
+                    document.getElementById('treasuryAddress').textContent = TREASURY_ADDRESS;
+                }
+
+            } catch (error) {
+                statusDiv.innerHTML = '<div class="error">❌ Error: ' + error.message + '</div>';
+            }
+        }
+
+        async function sendPayment() {
+            const statusDiv = document.getElementById('paymentStatus');
+            
+            try {
+                statusDiv.innerHTML = '<div class="info">⏳ Building transaction...</div>';
+
+                // Build transaction (500 ADA = 500,000,000 lovelace)
+                const amount = "500000000"; // 500 ADA in lovelace
+
+                // Simplified transaction - in production use proper Cardano library
+                s

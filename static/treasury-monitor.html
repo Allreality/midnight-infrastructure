@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Treasury Monitor</title>
+    <style>
+        body { font-family: Arial; background: #0a0e27; color: #fff; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .card {
+            background: #1a1f3a;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+        .stat { font-size: 2em; color: #667eea; margin: 10px 0; }
+        .qr { text-align: center; margin: 20px 0; }
+        code { 
+            background: #0a0e27; 
+            padding: 10px; 
+            display: block; 
+            border-radius: 5px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        .new-badge {
+            background: #f59e0b;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Treasury Monitor</h1>
+        
+        <div class="card">
+            <h2>Treasury Wallet Status</h2>
+            <div id="status"></div>
+            <button onclick="loadStatus()">🔄 Refresh</button>
+        </div>
+
+        <div class="card">
+            <h2>Payment Instructions</h2>
+            <p>Send payments to this address:</p>
+            <code id="address">Loading...</code>
+            
+            <div class="qr">
+                <div id="qrcode"></div>
+                <p><small>Scan to pay with mobile wallet</small></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Recent Payments</h2>
+            <div id="payments">No payments yet</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        async function loadStatus() {
+            try {
+                // Get pricing info (includes treasury address)
+                const pricingRes = await fetch('/api/payment/pricing');
+                const pricing = await pricingRes.json();
+                
+                document.getElementById('address').textContent = pricing.treasury_address;
+                
+                // Generate QR code
+                document.getElementById('qrcode').innerHTML = '';
+                new QRCode(document.getElementById('qrcode'), {
+                    text: pricing.treasury_address,
+                    width: 200,
+                    height: 200
+                });
+
+                // Check treasury balance
+                const balanceRes = await fetch(`/api/payment/wallet/balance/${pricing.treasury_address}`);
+                const balance = await balanceRes.json();
+
+                const statusDiv = document.getElementById('status');
+                
+                if (balance.tx_count === 0) {
+                    statusDiv.innerHTML = `
+                        <span class="new-badge">NEW ADDRESS</span>
+                        <p class="stat">0 ADA</p>
+                        <p>Awaiting first payment</p>
+                        <p><small>This is normal for a new treasury wallet</small></p>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <p class="stat">${balance.balance_ada.toFixed(2)} ADA</p>
+                        <p>Total Transactions: ${balance.tx_count}</p>
+                    `;
+                }
+
+            } catch (error) {
+                document.getElementById('status').innerHTML = 
+                    `<p style="color:#ef4444;">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Load on page load
+        loadStatus();
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadStatus, 30000);
+    </script>
+</body>
+</html>
