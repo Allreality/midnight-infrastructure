@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Midnight Airdrop Claims Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a2e; color: #fff; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card { background: #16213e; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .stat { display: inline-block; margin: 10px 20px; }
+        .stat-value { font-size: 2em; color: #0f4c75; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #3a4663; }
+        th { background: #0f4c75; }
+        .success { color: #2ecc71; }
+        .pending { color: #f39c12; }
+        .failed { color: #e74c3c; }
+        button { padding: 10px 20px; background: #0f4c75; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #1a5490; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌙 Midnight Airdrop Claims Dashboard</h1>
+        
+        <div class="card">
+            <h2>📊 Statistics</h2>
+            <div class="stat">
+                <div class="stat-value" id="totalClaims">-</div>
+                <div>Total Claims</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value success" id="successClaims">-</div>
+                <div>Successful</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value failed" id="failedClaims">-</div>
+                <div>Failed</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>💰 Your Wallet</h2>
+            <p>addr1q9np4m2eg4xtr8kn6mvccwklpv6a7kxhq8uqkk45gpd2tz326xxqn233h4a3lf5yv3utg7lwlg0vheasx9zjvzyfy8kqs0gpcx</p>
+            <button onclick="checkEligibility()">Check Eligibility</button>
+            <button onclick="submitClaim()">Submit Claim</button>
+            <div id="eligibilityResult" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="card">
+            <h2>📋 Recent Claims</h2>
+            <table id="claimsTable">
+                <thead>
+                    <tr>
+                        <th>Wallet</th>
+                        <th>Phase</th>
+                        <th>Status</th>
+                        <th>Timestamp</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5002/api';
+        const WALLET = 'addr1q9np4m2eg4xtr8kn6mvccwklpv6a7kxhq8uqkk45gpd2tz326xxqn233h4a3lf5yv3utg7lwlg0vheasx9zjvzyfy8kqs0gpcx';
+
+        async function loadStats() {
+            const res = await fetch(`${API_BASE}/claims/stats`);
+            const data = await res.json();
+            document.getElementById('totalClaims').textContent = data.total_attempts;
+            document.getElementById('successClaims').textContent = data.successful_claims;
+            document.getElementById('failedClaims').textContent = data.failed_claims;
+        }
+
+        async function loadClaims() {
+            const res = await fetch(`${API_BASE}/claims/attempts`);
+            const data = await res.json();
+            const tbody = document.querySelector('#claimsTable tbody');
+            tbody.innerHTML = data.claims.slice(-10).reverse().map(c => `
+                <tr>
+                    <td>${c.wallet || c.agent_id || 'Unknown'}</td>
+                    <td>${c.phase || 'N/A'}</td>
+                    <td class="${c.status}">${c.status}</td>
+                    <td>${new Date(c.timestamp).toLocaleString()}</td>
+                    <td>${c.notes || ''}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function checkEligibility() {
+            const res = await fetch(`${API_BASE}/claims/eligibility`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({address: WALLET})
+            });
+            const data = await res.json();
+            const result = document.getElementById('eligibilityResult');
+            if (data.eligible) {
+                result.innerHTML = '<p class="success">✅ Eligible for airdrop!</p>';
+            } else {
+                result.innerHTML = '<p class="failed">❌ Not eligible</p>';
+            }
+        }
+
+        async function submitClaim() {
+            const res = await fetch(`${API_BASE}/claims/log`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    address: WALLET,
+                    wallet: 'akil-hashim',
+                    phase: 'midnight-airdrop',
+                    notes: 'Claim submitted via dashboard',
+                    cid: 'bafybeigdyr...'
+                })
+            });
+            const data = await res.json();
+            alert('Claim submitted!');
+            loadClaims();
+            loadStats();
+        }
+
+        // Load data on page load
+        loadStats();
+        loadClaims();
+        setInterval(() => {
+            loadStats();
+            loadClaims();
+        }, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+[
+  {
+    "donor_wallet": "addr_test1qdonorxyz...",
+    "amount": 100.5,
+    "token": "tDUST",
+    "agent_id": "akil-hashim",
+    "cid": "bafybeigdyrmidnightdonationregistry",
+    "timestamp": "2025-11-01T22:26:38.922498"
+  }
+]
