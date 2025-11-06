@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Cardano - Roadmap & Documentation</title>
+    <link rel="stylesheet" href="/static/css/hub.css">
+    <style>
+        .roadmap-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+        .milestone {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 30px;
+        }
+        .milestone::before {
+            content: '';
+            position: absolute;
+            left: -44px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #667eea;
+        }
+        .milestone.completed::before {
+            background: #4CAF50;
+            box-shadow: 0 0 0 4px #4CAF50;
+        }
+        .milestone.in-progress::before {
+            background: #FF9800;
+            box-shadow: 0 0 0 4px #FF9800;
+        }
+        .milestone h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .milestone .date {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌙 Midnight Cardano</h1>
+            <p>Data Protection Blockchain Development</p>
+            <a href="/" style="color: white; text-decoration: none;">← Back to Hub</a>
+        </header>
+
+        <div class="roadmap-section">
+            <h2>📚 Documentation Library</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>DApp Connector API</h3>
+                    <p>Guide for integrating Midnight DApps with wallet connectors</p>
+                    <div class="links">
+                        <a href="#">View Documentation</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Ledger API</h3>
+                    <p>Developer guide for Midnight Ledger integration</p>
+                    <div class="links">
+                        <a href="#">View Documentation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="roadmap-section">
+            <h2>🗺️ Development Roadmap</h2>
+            
+            <div class="timeline">
+                <div class="milestone completed">
+                    <h3>Phase 1: Research & Documentation</h3>
+                    <div class="date">Completed - Q4 2024</div>
+                    <ul>
+                        <li>✅ Reviewed Midnight DApp Connector API</li>
+                        <li>✅ Reviewed Midnight Ledger API</li>
+                        <li>✅ Set up development environment</li>
+                    </ul>
+                </div>
+
+                <div class="milestone in-progress">
+                    <h3>Phase 2: Development Environment Setup</h3>
+                    <div class="date">In Progress - Q1 2025</div>
+                    <ul>
+                        <li>⏳ Configure Midnight development tools</li>
+                        <li>⏳ Set up local test network</li>
+                        <li>⏳ Create starter templates</li>
+                    </ul>
+                </div>
+
+                <div class="milestone">
+                    <h3>Phase 3: First DApp Prototype</h3>
+                    <div class="date">Planned - Q2 2025</div>
+                    <ul>
+                        <li>Build proof-of-concept application</li>
+                        <li>Integrate wallet connector</li>
+                        <li>Test on testnet</li>
+                    </ul>
+                </div>
+
+                <div class="milestone">
+                    <h3>Phase 4: Production Deployment</h3>
+                    <div class="date">Planned - Q3 2025</div>
+                    <ul>
+                        <li>Security audit</li>
+                        <li>Mainnet deployment</li>
+                        <li>User documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="roadmap-section">
+            <h2>🔗 Resources</h2>
+            <ul style="line-height: 2;">
+                <li><a href="https://midnight.network/" target="_blank">Midnight Network Official Site</a></li>
+                <li><a href="https://docs.midnight.network/" target="_blank">Midnight Documentation</a></li>
+                <li><a href="#">Local Documentation Repository</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+📘 Midnight Infrastructure API Documentation
+🧱 Overview
+This API powers agent registration, CID tracking, and donation routing for the Midnight Infrastructure project. It uses modular Flask Blueprints, JSON-backed registries, and role-based access control.
+
+🔗 Base URL
+http://localhost:5056/api/
+
+📁 Endpoints
+1. 
+Registers a new agent.
+• 	Request Body:
+
+{
+  "agent_id": "akil-hashim",
+  "role": "steward",
+  "wallet": "addr1...",
+  "cid": "bafybeigdyr..."
+}
+
+• 	Response:
+
+{
+  "status": "registered",
+  "agent": { ... }
+}
+
+2. GET /agent/<agent_id>
+Retrieves agent details by ID.
+• 	Response:
+{
+  "agent": { ... }
+}
+
+3. POST /cid/track
+Tracks a CID entry (requires steward role).
+
+Request Body:
+
+{
+  "agent_id": "akil-hashim",
+  "cid": "bafybeigdyr..."
+}
+
+• 	Response:
+
+{
+  "status": "tracked",
+  "cid": { ... }
+}
+
+5. POST /donations/route
+Routes a donation (requires architect role).
+
+• 	Request Body:
+{
+  "agent_id": "akil-hashim",
+  "amount": 100,
+  "currency": "USD",
+  "purpose": "community food drive"
+}
+
+- Response:
+{
+  "status": "received",
+  "payload": { ... }
+}
+
+🛡️ Role-Based access
+@require_role("steward") > CID tracking
+
+@require_role("architect") >donation routing
+Roles are validated against
+
+📂 Registry Files
+
+
+
+All registries are JSON arrays. They are loaded and saved via olad_registry() and save_registry() in services/registry.py
+
+🧪 Testing
+Use curl or Postman to test endpoints. All responses are JSON. Server runs on:
+flask run --port=5056
+
+flask run --port=5056
+
+🧭 Next Additions
+- GET /donations/list for audit logs
+- GET /health/check for registry integrity
+- registry_init.py to auto-create and validate registry files
+
+Would you like me to scaffold this into a Markdown file (docs/api.md) with headers, examples, and file paths? I’ll include versioning and contributor notes for reproducibility.

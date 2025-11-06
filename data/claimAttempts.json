@@ -1,0 +1,22 @@
+import React, { useEffect, useState } from "react"
+import ClaimStatusPanel from "../components/ClaimStatusPanel"
+
+export default function Dashboard() {
+  const [claims, setClaims] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:5060/api/claims/registry")
+      .then(res => res.json())
+      .then(data => setClaims(data))
+      .catch(err => console.error("Registry fetch failed:", err))
+  }, [])
+
+  return (
+    <div>
+      <h2>Claim Registry Dashboard</h2>
+      {claims.map((entry, idx) => (
+        <ClaimStatusPanel key={idx} claim={entry} />
+      ))}
+    </div>
+  )
+}

@@ -1,0 +1,129 @@
+# server.py — x402-compatible API server
+# Location: /mnt/c/projects/midnight-infrastructure/server.py
+import json
+import os
+from flask import Flask
+# routes/health.py
+from flask import Blueprint, jsonify
+
+bp = Blueprint("health", __name__)
+
+@bp.route("/health", methods=["GET"])
+def health():
+    return jsonify(status="ok"), 200
+
+
+# Load port config
+from routes.health import bp as health_bp   # adjust import path if different
+
+
+with open(os.path.join("config", "ports.json")) as f:
+    ports = json.load(f)
+
+
+
+with open("config/ports.json") as f:
+    ports = json.load(f)
+
+
+from services.auth import require_role
+from flask import Flask
+from routes.agents import agents_bp
+from routes.cid import cid_bp
+from routes.donations import donations_bp
+from routes.claims import claims_bp
+from routes.registry_routes import registry_bp
+
+# register blueprint(s) already present in routes
+app = Flask(__name__)
+app.register_blueprint(agents_bp)
+app.register_blueprint(cid_bp)
+app.register_blueprint(donations_bp)
+app.register_blueprint(claims_bp)
+app.register_blueprint(registry_bp)
+app.run(port=ports["flask"])
+app.register_blueprint(health_bp, url_prefix="")  # register at root so /health works
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5002, debug=False)
+
+
+# Load or initialize registries
+AGENT_REGISTRY = "agentRegistry.json"
+CID_REGISTRY = "projectRegistry.json"
+
+def load_registry(path):
+    if os.path.exists(path):
+        with open(path, "r") as f:
+            return json.load(f)
+    return []
+
+def save_registry(path, data):
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
+
+# Schemas
+agent_schema = {
+    "type": "object",
+    "properties": {
+        "agent_id": {"type": "string"},
+        "role": {"type": "string"},
+        "wallet": {"type": "string"},
+        "cid": {"type": "string"}
+    },
+    "required": ["agent_id", "role", "wallet", "cid"]
+}
+
+cid_schema = {
+    "type": "object",
+    "properties": {
+        "cid": {"type": "string"},
+        "agent_id": {"type": "string"},
+        "timestamp": {"type": "string"}
+    },
+    "required": ["cid", "agent_id"]
+}
+
+@app.route("/api/agents/register", methods=["POST"])
+def register_agent():
+    data = request.json
+    try:
+        validate(instance=data, schema=agent_schema)
+        registry = load_registry(AGENT_REGISTRY)
+        registry.append(data)
+        save_registry(AGENT_REGISTRY, registry)
+        return jsonify({"status": "registered", "agent": data}), 201
+    except ValidationError as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/api/cid/track", methods=["POST"])
+def track_cid():
+    data = request.json
+    try:
+        validate(instance=data, schema=cid_schema)
+        data["timestamp"] = datetime.utcnow().isoformat()
+        registry = load_registry(CID_REGISTRY)
+        registry.append(data)
+        save_registry(CID_REGISTRY, registry)
+        return jsonify({"status": "tracked", "cid": data}), 201
+    except ValidationError as e:
+        return jsonify({"error": str(e)}), 400
+    
+# server.py — update donation routing
+DONATION_REGISTRY = "donationRegistry.json"
+
+@app.route("/api/donations/route", methods=["POST"])
+def route_donation_handler():
+
+    @app.route("/api/agents/<agent_id>", methods=["GET"])
+    def get_agent_by_id(agent_id):
+        registry = load_registry(AGENT_REGISTRY)
+    for agent in registry:
+        if agent.get("agent_id") == agent_id:
+            return jsonify({"agent": agent}), 200
+    return jsonify({"error": "Agent not found"}), 404
+
+    ...
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5056, debug=True)

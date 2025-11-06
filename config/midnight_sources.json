@@ -1,0 +1,154 @@
+{
+  "official_sources": {
+    "general": [
+      {
+        "name": "Midnight Network",
+        "url": "https://midnight.network/",
+        "type": "website",
+        "priority": 1,
+        "scrape": true
+      },
+      {
+        "name": "Midnight Foundation",
+        "url": "https://midnight.foundation/",
+        "type": "website",
+        "priority": 1,
+        "scrape": true
+      },
+      {
+        "name": "Mission",
+        "url": "https://midnight.network/about",
+        "type": "info",
+        "priority": 2,
+        "scrape": true
+      },
+      {
+        "name": "Whitepaper",
+        "url": "https://midnight.network/whitepaper",
+        "type": "document",
+        "priority": 1,
+        "scrape": true
+      }
+    ],
+    "developer": [
+      {
+        "name": "GitHub",
+        "url": "https://github.com/midnight-ntwrk",
+        "type": "code",
+        "priority": 1,
+        "scrape": false
+      },
+      {
+        "name": "Documentation",
+        "url": "https://docs.midnight.network/",
+        "type": "docs",
+        "priority": 1,
+        "scrape": true
+      },
+      {
+        "name": "Quick Start",
+        "url": "https://docs.midnight.network/quickstart",
+        "type": "docs",
+        "priority": 2,
+        "scrape": true
+      },
+      {
+        "name": "Use Cases",
+        "url": "https://docs.midnight.network/learn/introduction/use-cases/",
+        "type": "docs",
+        "priority": 2,
+        "scrape": true
+      },
+      {
+        "name": "Academy",
+        "url": "https://docs.midnight.network/academy",
+        "type": "docs",
+        "priority": 2,
+        "scrape": true
+      },
+      {
+        "name": "Testnet Faucet",
+        "url": "https://midnight.network/test-faucet",
+        "type": "tool",
+        "priority": 3,
+        "scrape": false
+      },
+      {
+        "name": "DUST Token Info",
+        "url": "http://docs.midnight.network/learn/introduction/native-token/about-dust",
+        "type": "docs",
+        "priority": 1,
+        "scrape": true
+      }
+    ],
+    "support": [
+      {
+        "name": "Discourse Forum",
+        "url": "https://forum.midnight.network/c/technical-questions/5",
+        "type": "forum",
+        "priority": 2,
+        "scrape": true
+      }
+    ],
+    "social": [
+      {
+        "name": "Discord",
+        "url": "https://discord.com/invite/midnightnetwork",
+        "type": "chat",
+        "priority": 1,
+        "scrape": false
+      },
+      {
+        "name": "Twitter - Network",
+        "url": "https://x.com/MidnightNtwrk",
+        "type": "social",
+        "priority": 1,
+        "scrape": false
+      },
+      {
+        "name": "Twitter - Foundation",
+        "url": "https://x.com/midnightfdn",
+        "type": "social",
+        "priority": 1,
+        "scrape": false
+      },
+      {
+        "name": "YouTube",
+        "url": "https://www.youtube.com/@midnight.network",
+        "type": "video",
+        "priority": 2,
+        "scrape": false
+      },
+      {
+        "name": "Telegram",
+        "url": "https://t.me/Midnight_Network_Official",
+        "type": "chat",
+        "priority": 2,
+        "scrape": false
+      },
+      {
+        "name": "Reddit",
+        "url": "https://www.reddit.com/r/Midnight/",
+        "type": "forum",
+        "priority": 2,
+        "scrape": true
+      },
+      {
+        "name": "Blog",
+        "url": "https://docs.midnight.network/blog",
+        "type": "blog",
+        "priority": 1,
+        "scrape": true
+      },
+      {
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/showcase/midnight-ntwrk/",
+        "type": "social",
+        "priority": 3,
+        "scrape": false
+      }
+    ]
+  },
+  "scrape_schedule": {
+    "high_priority": "every_6_hours",
+    "medium_priority": "

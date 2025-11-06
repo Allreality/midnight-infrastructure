@@ -1,0 +1,124 @@
+{
+    "research_curator_id": {
+        "class": "ResearchCuratorAgent",
+        "role": "Tier 1: Research Orchestrator and Synthesizer",
+        "wallet": "addr_curator_001",
+        "api_key": "RC-API-SECRET-001"
+    },
+    "doc_writer_id": {
+        "class": "DocumentationWriterAgent",
+        "role": "Tier 1: Technical Documentation Editor",
+        "wallet": "addr_writer_002",
+        "api_key": "DW-API-SECRET-002"
+    },
+    "kb_maintainer_id": {
+        "class": "KBMaintainerAgent",
+        "role": "Tier 1: Knowledge Base Indexer and Auditor",
+        "wallet": "addr_kb_003",
+        "api_key": "KB-API-SECRET-003"
+    },
+
+    "treasury_routing_id": {
+        "class": "TreasuryRoutingAgent",
+        "role": "Tier 2: Financial Routing and Ledger Agent",
+        "wallet": "addr_treasury_004",
+        "api_key": "TR-API-SECRET-004"
+    },
+
+    "dev_protocol_analyst_01": {
+        "class": "ProtocolAnalystAgent",
+        "role": "Tier 3: Cardano Stake Pool & Protocol Analyst",
+        "wallet": "addr_dev_005",
+        "api_key": "PA-API-SECRET-005"
+    },
+    "dev_smart_contract_02": {
+        "class": "SmartContractAgent",
+        "role": "Tier 3: Midnight Smart Contract Pattern Researcher",
+        "wallet": "addr_dev_006",
+        "api_key": "SC-API-SECRET-006"
+    },
+    "dev_zkp_analyzer_03": {
+        "class": "ZKProofAnalyzerAgent",
+        "role": "Tier 3: Zero-Knowledge Proof Implementation Tracker",
+        "wallet": "addr_dev_007",
+        "api_key": "ZK-API-SECRET-007"
+    },
+    "dev_consensus_tracker_04": {
+        "class": "ConsensusTrackerAgent",
+        "role": "Tier 3: Consensus Mechanism Development Tracker",
+        "wallet": "addr_dev_008",
+        "api_key": "CT-API-SECRET-008"
+    },
+    "health_hipaa_05": {
+        "class": "HealthComplianceAgent",
+        "role": "Tier 3: HIPAA Compliance Monitor",
+        "wallet": "addr_health_009",
+        "api_key": "HC-API-SECRET-009"
+    },
+    "health_fhir_06": {
+        "class": "FHIRStandardsAgent",
+        "role": "Tier 3: HL7 and FHIR Standards Documenter",
+        "wallet": "addr_health_010",
+        "api_key": "FS-API-SECRET-010"
+    },
+    "ci_competitor_07": {
+        "class": "CompetitorTrackerAgent",
+        "role": "Tier 3: Track Competing Blockchain Projects",
+        "wallet": "addr_ci_011",
+        "api_key": "CC-API-SECRET-011"
+    },
+    "ci_feature_comparisons_08": {
+        "class": "FeatureComparisonAgent",
+        "role": "Tier 3: Feature Analysis and Comparison Generator",
+        "wallet": "addr_ci_012",
+        "api_key": "FC-API-SECRET-012"
+    },
+    "ci_trend_forecaster_09": {
+        "class": "TrendForecastingAgent",
+        "role": "Tier 3: Monitor Technology Trends and Opportunities",
+        "wallet": "addr_ci_013",
+        "api_key": "TF-API-SECRET-013"
+    },
+    "team_onboarding_10": {
+        "class": "OnboardingAgent",
+        "role": "Tier 3: Team Onboarding Documentation Generator",
+        "wallet": "addr_team_014",
+        "api_key": "OB-API-SECRET-014"
+    },
+    "team_specs_11": {
+        "class": "SpecificationsAgent",
+        "role": "Tier 3: Technical Specifications Library Builder",
+        "wallet": "addr_team_015",
+        "api_key": "TS-API-SECRET-015"
+    },
+    "market_data_12": {
+        "class": "MarketDataAgent",
+        "role": "Tier 3: Real-Time Labor Market Data Aggregator",
+        "wallet": "addr_market_016",
+        "api_key": "MD-API-SECRET-016"
+    },
+    "market_analysis_13": {
+        "class": "MarketAnalysisAgent",
+        "role": "Tier 3: Labor Market Analysis and Synthesis",
+        "wallet": "addr_market_017",
+        "api_key": "MA-API-SECRET-017"
+    },
+    "security_auditor_14": {
+        "class": "SecurityAuditorAgent",
+        "role": "Tier 3: Smart Contract Security and Vulnerability Researcher",
+        "wallet": "addr_security_018",
+        "api_key": "SA-API-SECRET-018"
+    },
+    "reg_policy_15": {
+        "class": "RegulatoryPolicyAgent",
+        "role": "Tier 3: Blockchain Regulatory Change Tracker",
+        "wallet": "addr_reg_019",
+        "api_key": "RP-API-SECRET-019"
+    },
+    "audit_proof_checker_16": {
+        "class": "ProofCheckerAgent",
+        "role": "Tier 3: Documentation and Claim Reliability Checker",
+        "wallet": "addr_audit_020",
+        "api_key": "PC-API-SECRET-020"
+    }
+}

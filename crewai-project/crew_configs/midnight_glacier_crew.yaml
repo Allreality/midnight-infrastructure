@@ -1,0 +1,33 @@
+crew_name: Midnight Glacier Drop Verifier
+objective: >
+  Validate wallet eligibility, enforce deduplication, inject OD provenance, and generate audit report for Midnight Glacier Drop.
+
+agents:
+  - name: WalletEligibilityValidator
+    role: Validate wallet eligibility
+    tools: [wallet_checker]
+    input: data/wallets/eligibility.json
+
+  - name: DeduplicationGuardian
+    role: Enforce deduplication logic
+    tools: [registry_reader]
+    input: data/registry/claims.json
+
+  - name: ODProvenanceInjector
+    role: Inject OD provenance
+    tools: [cid_injector]
+    input: data/registry/claims.json
+
+  - name: AuditReportGenerator
+    role: Compile audit report
+    tools: [markdown_reporter]
+    input: outputs/claim_verification_logs.json
+
+output:
+  format: markdown
+  path: outputs/midnight_glacier_audit.md
+
+validation:
+  - cid_format_check
+  - audit_integrity_check
+  - no_duplicate_claims
