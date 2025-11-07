@@ -5,3 +5,5 @@ venv/
 registry/
 .env
 .env
+midnight-key.pem
+midnight-service-account.json
