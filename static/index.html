@@ -1,22 +1,333 @@
-<!-- midnight-compliance-site/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Midnight Compliance Infrastructure</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Compliance Infrastructure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .header .credits {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #1a1f3a;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 1.1em;
+        }
+
+        .stat-detail {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+
+        .section {
+            background: #1a1f3a;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .agent-card {
+            background: #0a0e27;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .agent-card.ready {
+            border-left-color: #4caf50;
+        }
+
+        .agent-card.warning {
+            border-left-color: #ff9800;
+        }
+
+        .agent-card h3 {
+            color: #e0e0e0;
+            margin-bottom: 8px;
+        }
+
+        .agent-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .agent-status.ready {
+            background: #4caf50;
+            color: white;
+        }
+
+        .agent-status.warning {
+            background: #ff9800;
+            color: white;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .link-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .link-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .achievements {
+            background: linear-gradient(135deg, #1a1f3a 0%, #2a2f4a 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .achievements h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .achievements ul {
+            list-style: none;
+        }
+
+        .achievements li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .achievements li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Midnight Compliance Infrastructure</h1>
-    <p>Powered by Claude AI · Built on Midnight · ADA-Based Access</p>
-  </header>
-  <section class="hero">
-    <p>Reproducible onboarding, autonomous documentation, and compliance-ready flows for regulated industries.</p>
-  </section>
-  <footer>
-    <p>© 2025 Akil Hashim · midnight-compliance.com</p>
-  </footer>
+    <div class="container">
+        <div class="header">
+            <h1>🌙 Midnight Compliance Infrastructure</h1>
+            <div class="subtitle">
+                AI-Powered Blockchain Compliance & Autonomous Documentation System
+            </div>
+            <div class="credits">
+                Powered by Claude AI • Built on Midnight Blockchain • ADA-Based Access Control<br>
+                © 2025 Akil Hashim • Total Reality Global • midnight-compliance.com
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalDocs">-</div>
+                <div class="stat-label">Knowledge Base Documents</div>
+                <div class="stat-detail" id="docsDetail">Loading...</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalCategories">-</div>
+                <div class="stat-label">Compliance Categories</div>
+                <div class="stat-detail">NIST, HIPAA, ISO27001</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="agentCount">6</div>
+                <div class="stat-label">AI Agents Operational</div>
+                <div class="stat-detail" id="agentDetail">Loading status...</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="gapsFilled">14</div>
+                <div class="stat-label">NIST Gaps Filled</div>
+                <div class="stat-detail">Autonomous gap-filling complete</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🤖 AI Agent System</h2>
+            <div id="agentGrid" class="agent-grid">
+                <div class="loading">Loading agent status...</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 Quick Access</h2>
+            <div class="quick-links">
+                <a href="/knowledge" class="link-button">📚 Knowledge Base</a>
+                <a href="/claims" class="link-button">📋 Claims Interface</a>
+                <a href="/api/agents/status" class="link-button">🤖 Agent Status API</a>
+                <a href="/api/knowledge/stats" class="link-button">📊 KB Statistics</a>
+            </div>
+        </div>
+
+        <div class="achievements">
+            <h3>🏆 Recent Achievements (November 2025)</h3>
+            <ul>
+                <li>Restored knowledge base with 155 documents across 27 categories</li>
+                <li>Verified and deployed 6 AI agents with real-time monitoring</li>
+                <li>Generated comprehensive NIST 800-171 gap analysis (13,433 chars)</li>
+                <li>Autonomous gap-filling campaign: 14/14 control families completed</li>
+                <li>Created ~70,000 characters of technical compliance documentation</li>
+                <li>Integrated Midnight blockchain with AMD SEV-SNP hardware security</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Load knowledge base stats
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/knowledge/stats');
+                const data = await res.json();
+                
+                document.getElementById('totalDocs').textContent = data.total_documents;
+                document.getElementById('totalCategories').textContent = data.categories;
+                document.getElementById('docsDetail').textContent = `${data.total_size_mb} MB total`;
+            } catch (e) {
+                console.error('Error loading stats:', e);
+            }
+        }
+
+        // Load agent status
+        async function loadAgents() {
+            try {
+                const res = await fetch('/api/agents/status');
+                const data = await res.json();
+                
+                const readyCount = Object.values(data.agents).filter(a => a.status === 'ready').length;
+                document.getElementById('agentCount').textContent = readyCount;
+                document.getElementById('agentDetail').textContent = `${readyCount}/6 ready`;
+                
+                const grid = document.getElementById('agentGrid');
+                grid.innerHTML = Object.entries(data.agents).map(([id, agent]) => `
+                    <div class="agent-card ${agent.status === 'ready' ? 'ready' : 'warning'}">
+                        <span class="agent-status ${agent.status === 'ready' ? 'ready' : 'warning'}">
+                            ${agent.status.toUpperCase()}
+                        </span>
+                        <h3>${agent.name}</h3>
+                        <p style="color: #b0b0b0; font-size: 0.9em;">${agent.description}</p>
+                        ${agent.missing_requirements && agent.missing_requirements.length > 0 ? 
+                            `<p style="color: #ff9800; font-size: 0.85em; margin-top: 8px;">Missing: ${agent.missing_requirements.join(', ')}</p>` 
+                            : ''}
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error('Error loading agents:', e);
+            }
+        }
+
+        // Load on page load
+        loadStats();
+        loadAgents();
+    </script>
 </body>
 </html>
