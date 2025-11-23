@@ -1,0 +1,26 @@
+{
+  "campaign_date": "2025-11-23T00:29:49.255768",
+  "total_gaps": 3,
+  "completed": 3,
+  "errors": 0,
+  "results": [
+    {
+      "family": "Access Control (AC)",
+      "priority": "critical",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/AC_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Audit and Accountability (AU)",
+      "priority": "high",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/AU_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Configuration Management (CM)",
+      "priority": "high",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/CM_Midnight_Solution_20251123.md"
+    }
+  ]
+}

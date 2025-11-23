@@ -1,0 +1,92 @@
+{
+  "campaign_date": "2025-11-23T00:38:12.333866",
+  "total_gaps": 14,
+  "completed": 14,
+  "errors": 0,
+  "results": [
+    {
+      "family": "Access Control (AC)",
+      "priority": "critical",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/AC_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Audit and Accountability (AU)",
+      "priority": "high",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/AU_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Configuration Management (CM)",
+      "priority": "high",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/CM_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Identification and Authentication (IA)",
+      "priority": "critical",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/IA_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "System and Communications Protection (SC)",
+      "priority": "critical",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/SC_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "System and Information Integrity (SI)",
+      "priority": "critical",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/SI_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Media Protection (MP)",
+      "priority": "medium",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/MP_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Physical Protection (PE)",
+      "priority": "medium",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/PE_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Personnel Security (PS)",
+      "priority": "medium",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/PS_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Risk Assessment (RA)",
+      "priority": "high",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/RA_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Security Assessment (CA)",
+      "priority": "high",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/CA_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "System and Services Acquisition (SA)",
+      "priority": "medium",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/SA_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Incident Response (IR)",
+      "priority": "critical",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/IR_Midnight_Solution_20251123.md"
+    },
+    {
+      "family": "Maintenance (MA)",
+      "priority": "low",
+      "status": "completed",
+      "file": "knowledge-base/nist-gap-filling/automated-solutions/MA_Midnight_Solution_20251123.md"
+    }
+  ]
+}

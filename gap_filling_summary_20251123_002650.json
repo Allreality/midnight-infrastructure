@@ -1,0 +1,23 @@
+{
+  "campaign_date": "2025-11-23T00:26:50.217913",
+  "total_gaps": 3,
+  "completed": 0,
+  "errors": 3,
+  "results": [
+    {
+      "family": "Access Control (AC)",
+      "status": "error",
+      "file": null
+    },
+    {
+      "family": "Audit and Accountability (AU)",
+      "status": "error",
+      "file": null
+    },
+    {
+      "family": "Configuration Management (CM)",
+      "status": "error",
+      "file": null
+    }
+  ]
+}
