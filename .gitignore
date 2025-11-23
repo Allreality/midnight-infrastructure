@@ -9,3 +9,7 @@ midnight-key.pem
 midnight-service-account.json
 .next/
 node_modules/
+
+# Build artifacts
+.next/
+node_modules/
