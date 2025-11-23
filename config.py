@@ -1,0 +1,4 @@
+import os
+
+BLOCKFROST_PROJECT_ID = os.getenv("mainnetydnqWQUNmhXICaJFWlSHtQEVXt9VrVop")
+TREASURY_ADDRESS = os.getenv("addr1q9np4m2eg4xtr8kn6mvccwklpv6a7kxhq8uqkk45gpd2tz326xxqn233h4a3lf5yv3utg7lwlg0vheasx9zjvzyfy8kqs0gpcx")

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Reality Global - Patent Pending Ransomware Prevention</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background: #0f172a;
+        }
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .badge {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 3rem; margin: 20px 0; }
+        h2 { color: #94a3b8; margin-bottom: 20px; }
+        .subtitle { font-size: 1.3rem; margin-bottom: 30px; opacity: 0.9; }
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+        .section { margin: 60px 0; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .card {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #334155;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+        }
+        .card h3 { color: #818cf8; margin-bottom: 15px; }
+        .nist-badge {
+            text-align: center;
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 40px 0;
+        }
+        .highlight-section {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 10px;
+            border: 2px solid #334155;
+            text-align: center;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .green-card {
+            border-color: #10b981 !important;
+        }
+        .green-text {
+            color: #10b981;
+            font-weight: 600;
+        }
+        .red-text {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        footer {
+            background: #020617;
+            color: #cbd5e1;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #334155;
+        }
+        footer p { margin: 10px 0; }
+        .patent-footer {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        strong { color: #f1f5f9; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1.1rem; }
+            .stats { flex-direction: column; gap: 30px; }
+            .cta-button { display: block; margin: 10px auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="badge">🛡️ Patent Pending - App No. 63/917,456</div>
+        <h1>Stop Ransomware Attacks<br>Before They Spread</h1>
+        <p class="subtitle">Hardware-enforced security that prevents ransomware from accessing your data—even with system privileges.</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-number">$6.35M</span>
+                <span class="stat-label">Average Ransomware Cost</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">60%</span>
+                <span class="stat-label">Organizations Attacked Annually</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">14/14</span>
+                <span class="stat-label">NIST Control Families</span>
+            </div>
+        </div>
+        
+        <a href="mailto:akilhashim1@gmail.com?subject=Security Assessment Request" class="cta-button">Get Free Assessment</a>
+        <a href="mailto:akilhashim1@gmail.com?subject=Discovery Call Request" class="cta-button">Schedule Call</a>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>The Problem: Traditional Defenses Fail</h2>
+            <p>Healthcare organizations face $9.2M average ransomware costs. 60% are attacked annually. Traditional software-only defenses fail when attackers gain privilege escalation—they can bypass antivirus, disable monitoring, and delete backups.</p>
+        </div>
+
+        <div class="section">
+            <h2>Our Patent-Pending Solution</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>🔐 Hardware Isolation</h3>
+                    <p>AMD EPYC secure enclaves (SEV-SNP) provide processor-level memory encryption. Ransomware cannot access encrypted memory even with root privileges—it's physically impossible.</p>
+                </div>
+                <div class="card">
+                    <h3>⛓️ Blockchain Audit Trails</h3>
+                    <p>Every system event recorded to Midnight blockchain. Ransomware cannot delete or modify logs—complete forensics always available.</p>
+                </div>
+                <div class="card">
+                    <h3>🤖 AI Monitoring</h3>
+                    <p>Autonomous agents continuously verify compliance across 154 documents. Zero human intervention required—24/7 automated protection.</p>
+                </div>
+                <div class="card">
+                    <h3>🔒 Zero-Knowledge Proofs</h3>
+                    <p>Prove compliance to auditors without exposing sensitive data. Privacy-preserving cryptographic verification.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>What Happens When Ransomware Attacks</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>❌ Traditional Defenses</h3>
+                    <ol style="margin-left: 20px; margin-top: 15px;">
+                        <li>Ransomware gains system access</li>
+                        <li>Escalates to admin privileges</li>
+                        <li>Spreads across network</li>
+                        <li>Encrypts all accessible data</li>
+                        <li>Deletes backups and logs</li>
+                        <li>Demands ransom payment</li>
+                    </ol>
+                    <p class="red-text" style="margin-top: 20px; text-align: center;">Result: $6.35M average cost</p>
+                </div>
+                <div class="card green-card">
+                    <h3>✅ Our Hardware Isolation</h3>
+                    <ol style="margin-left: 20px; margin-top: 15px;">
+                        <li>Ransomware gains system access</li>
+                        <li>Tries to escalate privileges</li>
+                        <li><strong>BLOCKED</strong> - Cannot access hardware-encrypted memory</li>
+                        <li><strong>ISOLATED</strong> - Cannot move between enclaves</li>
+                        <li><strong>RECORDED</strong> - All attempts logged to blockchain</li>
+                        <li><strong>CONTAINED</strong> - Attack quarantined automatically</li>
+                    </ol>
+                    <p class="green-text" style="margin-top: 20px; text-align: center;">Result: Zero data loss, complete forensics</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Complete NIST 800-171 Coverage</h2>
+            <div class="nist-badge">14/14</div>
+            <p style="text-align: center; font-size: 1.2rem; color: #94a3b8;">Control Families | 154 Documents | AI-Powered Verification</p>
+            
+            <div style="margin-top: 40px;">
+                <div class="grid">
+                    <div class="card">
+                        <h3>✅ Access Control</h3>
+                        <p>47 documents covering authentication, authorization, and least privilege</p>
+                    </div>
+                    <div class="card">
+                        <h3>✅ Audit & Accountability</h3>
+                        <p>Blockchain immutable logging—ransomware cannot delete audit trails</p>
+                    </div>
+                    <div class="card">
+                        <h3>✅ System Protection</h3>
+                        <p>Hardware-enforced network isolation and encryption</p>
+                    </div>
+                    <div class="card">
+                        <h3>✅ + 11 More Families</h3>
+                        <p>Complete coverage: Incident Response, Risk Assessment, Configuration Management, and more</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-section" style="margin-top: 40px;">
+                <h3 style="color: #818cf8;">NIH Mandate Compliance</h3>
+                <p>Effective January 25, 2025, research institutions must demonstrate NIST 800-171 compliance for NIH grants. We provide complete coverage with cryptographic proof.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Patent-Pending Innovation</h2>
+            <div class="highlight-section">
+                <p><strong style="font-size: 1.3rem;">Application No. 63/917,456</strong></p>
+                <p style="margin-top: 10px;">Filed November 14, 2025</p>
+                <p style="margin-top: 20px; color: #94a3b8;">Our unique combination of hardware isolation, blockchain verification, and AI monitoring is protected by provisional patent. No other vendor offers this integrated approach.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>The Business Case</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>💸 Cost of Attack</h3>
+                    <div style="margin-top: 20px;">
+                        <p>Ransom payment: <strong>$1.85M</strong></p>
+                        <p>Downtime & recovery: <strong>$4.50M</strong></p>
+                        <p>Regulatory fines: <strong>$0.50M</strong></p>
+                        <p>Reputation damage: <strong>$1.50M</strong></p>
+                        <p style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #334155;">
+                            <span class="red-text" style="font-size: 1.5rem;">Total: $8.35M</span>
+                        </p>
+                        <p style="margin-top: 10px; color: #94a3b8;">60% annual probability = $5M expected cost</p>
+                    </div>
+                </div>
+                <div class="card green-card">
+                    <h3>💰 Our Solution</h3>
+                    <div style="margin-top: 20px;">
+                        <p>Enterprise implementation: <strong>$500K</strong></p>
+                        <p>Annual support: <strong>$100K</strong></p>
+                        <p>Monthly monitoring: <strong>$60K/year</strong></p>
+                        <p>Insurance reduction: <span class="green-text">-$200K/year</span></p>
+                        <p style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #10b981;">
+                            <span class="green-text" style="font-size: 1.5rem;">5-Year Total: $1.3M</span>
+                        </p>
+                        <p style="margin-top: 10px; font-size: 1.2rem;" class="green-text">12x ROI (one prevented attack pays for itself)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Industries We Serve</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>🏥 Healthcare</h3>
+                    <p>NIH mandate compliance (Jan 25, 2025)</p>
+                    <p>Research institutions</p>
+                    <p>Clinical trial data</p>
+                    <p style="margin-top: 15px;" class="red-text">$9.2M average attack cost</p>
+                </div>
+                <div class="card">
+                    <h3>🏦 Financial Services</h3>
+                    <p>Regulatory compliance</p>
+                    <p>Transaction security</p>
+                    <p>Customer data protection</p>
+                    <p style="margin-top: 15px;" class="red-text">$5.9M average attack cost</p>
+                </div>
+                <div class="card">
+                    <h3>🏛️ Government Contractors</h3>
+                    <p>DoD NIST 800-171 requirement</p>
+                    <p>CMMC compliance</p>
+                    <p>Controlled unclassified info</p>
+                    <p style="margin-top: 15px;" class="green-text">Required for contracts</p>
+                </div>
+                <div class="card">
+                    <h3>🔬 Research Institutions</h3>
+                    <p>Controlled-access datasets</p>
+                    <p>Multi-institutional collaboration</p>
+                    <p>Grant requirements</p>
+                    <p style="margin-top: 15px;" class="green-text">Genomic data protection</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Development Journey</h2>
+            <div class="highlight-section">
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-number">241.37</span>
+                        <span class="stat-label">Hours Development</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">154</span>
+                        <span class="stat-label">Compliance Documents</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">14/14</span>
+                        <span class="stat-label">NIST Coverage</span>
+                    </div>
+                </div>
+                <p style="margin-top: 30px; color: #94a3b8;">From concept to patent-pending solution. Built with hardware-level security, blockchain verification, and AI automation. Now ready for enterprise deployment.</p>
+            </div>
+        </div>
+
+        <div class="section highlight-section">
+            <h2 style="color: #f1f5f9;">Get Started Today</h2>
+            <p style="font-size: 1.2rem; margin: 20px 0;">Complimentary security assessment • 48-hour turnaround • No obligation</p>
+            
+            <div style="margin: 30px 0;">
+                <a href="mailto:akilhashim1@gmail.com?subject=Security Assessment Request" class="cta-button">Request Free Assessment</a>
+                <a href="mailto:akilhashim1@gmail.com?subject=Discovery Call Request" class="cta-button">Schedule Discovery Call</a>
+            </div>
+            
+            <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #334155;">
+                <p><strong>Email:</strong> akilhashim1@gmail.com</p>
+                <p><strong>Location:</strong> Marlborough, MA</p>
+                <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/akil-hashim" style="color: #818cf8;" target="_blank">Connect with Akil Hashim</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="font-size: 1.3rem;"><strong>Total Reality Global</strong></p>
+        <p class="patent-footer">Patent Pending - Application No. 63/917,456</p>
+        <p>&copy; 2025 All rights reserved</p>
+        <p style="margin-top: 20px; color: #64748b;">Hardware-Enforced Ransomware Prevention | Complete NIST 800-171 Compliance</p>
+        <p style="margin-top: 10px; color: #475569;">241.37 hours development | 154 compliance documents | 14/14 NIST control families</p>
+    </footer>
+</body>
+</html>

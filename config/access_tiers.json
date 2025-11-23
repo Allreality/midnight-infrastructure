@@ -1,0 +1,34 @@
+{
+  "tiers": {
+    "free": {
+      "name": "Community",
+      "cost_ada": 0,
+      "features": ["Basic documentation", "Public guides"],
+      "rate_limits": {"api_calls_per_day": 100}
+    },
+    "professional": {
+      "name": "Professional",
+      "cost_ada": 500,
+      "billing": "monthly",
+      "features": [
+        "Full industry documentation (135+ docs)",
+        "Healthcare, Finance, Logistics compliance",
+        "Workflow templates",
+        "Priority API (1000 calls/day)",
+        "Priority support"
+      ]
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "cost_ada": 5000,
+      "billing": "monthly",
+      "features": [
+        "Everything in Professional",
+        "White-label deployment",
+        "Custom compliance modules",
+        "Dedicated agents",
+        "24/7 support"
+      ]
+    }
+  }
+}

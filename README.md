@@ -245,6 +245,11 @@ This project documents compliance - we practice it:
 ✅ Source citation for all claims
 ✅ Multi-level review process
 ✅ Change notifications
+## 📚 Documentation
+
+- [Technical Roadmap](docs/technical-roadmap.md)
+- [Compliance Roadmap](docs/COMPLIANCE_ROADMAP.md)
+- [Monetization Roadmap](docs/midmoney.md)
 
 💡 Project Philosophy
 Transparency First: Honest status reporting

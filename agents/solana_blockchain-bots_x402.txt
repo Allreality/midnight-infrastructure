@@ -1,0 +1,162 @@
+solana blockchain trading-bot x402 payments autonomous-agents typescript jupiter-exchange dex
+
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+Enter same passphrase again:
+
+Wrote new keypair to midnight-treasury.json
+==============================================================================
+pubkey: D7XTQ9dktNzx7eXmrUE6stPkLiLUC1uesUVKR2GCwrvS
+==============================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+party flush tide anxiety oyster insane toe collect tuition palm divide outside
+==============================================================================
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+Enter same passphrase again:
+
+Wrote new keypair to midnight-integration.json
+===============================================================================
+pubkey: 4mJvZBZz1mk88umFe9NCPDbZZULh62GLNMXUkPpinHtZ
+===============================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+velvet witness shoulder weasel leaf arctic pact toilet brand baby wheel captain
+===============================================================================
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+Enter same passphrase again:
+
+Wrote new keypair to midnight-compliance.json
+=======================================================================
+pubkey: 8VFZZMHdGvXPNDpe7k6R5kLE8icrtoBowGFD6EkztD5r
+=======================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+street tackle vast text vicious chef moon rookie arrow text stamp heavy
+=======================================================================
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+Enter same passphrase again:
+
+Wrote new keypair to midnight-developer.json
+============================================================================
+pubkey: HgYq5SAYab4r3s1EyJ2T29G7FLWUgYGt5PZHmKXZLpk
+============================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+civil focus solve shell roast display cherry unlock image easy mango economy
+============================================================================
+
+(base) akil@MetaverseViewer:~$ solana-keygen new -o midnight-treasury.json
+solana-keygen new -o midnight-integration.json
+solana-keygen new -o midnight-compliance.json
+solana-keygen new -o midnight-developer.json
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+Enter same passphrase again:
+
+Wrote new keypair to midnight-treasury.json
+==============================================================================
+pubkey: D7XTQ9dktNzx7eXmrUE6stPkLiLUC1uesUVKR2GCwrvS
+==============================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+party flush tide anxiety oyster insane toe collect tuition palm divide outside
+==============================================================================
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+Enter same passphrase again:
+
+Wrote new keypair to midnight-integration.json
+===============================================================================
+pubkey: 4mJvZBZz1mk88umFe9NCPDbZZULh62GLNMXUkPpinHtZ
+===============================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+velvet witness shoulder weasel leaf arctic pact toilet brand baby wheel captain
+===============================================================================
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+Enter same passphrase again:
+
+Wrote new keypair to midnight-compliance.json
+=======================================================================
+pubkey: 8VFZZMHdGvXPNDpe7k6R5kLE8icrtoBowGFD6EkztD5r
+=======================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+street tackle vast text vicious chef moon rookie arrow text stamp heavy
+=======================================================================
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+Enter same passphrase again:
+
+Wrote new keypair to midnight-developer.json
+============================================================================
+pubkey: HgYq5SAYab4r3s1EyJ2T29G7FLWUgYGt5PZHmKXZLpk
+============================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+civil focus solve shell roast display cherry unlock image easy mango economy
+============================================================================
+(base) akil@MetaverseViewer:~$ solana-keygen pubkey midnight-treasury.json
+solana-keygen pubkey midnight-integration.json
+solana-keygen pubkey midnight-compliance.json
+solana-keygen pubkey midnight-developer.json
+D7XTQ9dktNzx7eXmrUE6stPkLiLUC1uesUVKR2GCwrvS
+4mJvZBZz1mk88umFe9NCPDbZZULh62GLNMXUkPpinHtZ
+8VFZZMHdGvXPNDpe7k6R5kLE8icrtoBowGFD6EkztD5r
+HgYq5SAYab4r3s1EyJ2T29G7FLWUgYGt5PZHmKXZLpk
+
+1. **Midnitebotbank**: `3Amc3tkRvijtrRtE6XVAkYd8UxF9VKqm7mqDdyT6FPWm`
+2. **midnight-integration-agent**: `7xbS8JuRLoVeQsb1Sp6Bc4ESShp6LEb2eoJtjohr65KK`
+3. **midnight-compliance-agent**: `4ppPain22Fx54vXvE4Fvk7cYjx4emkfTHVAQpobc4pLv`
+4. **midnight-developer-agent**: `FXL7intKqJPSvXorpNLePakfRbjqs3iJU18ftSZ9GVTr`
+
+
+echo "2E8ZHGTYpecWajE2ot58fxw9sjc1cFKRE8rKniA2YwSrJpcGn5Hg2U7X7nXiKYTENFxfxMpJPMP2L448pH4tTE8f" > .env
+
+# Add to .gitignore
+echo ".env" >> .gitignore

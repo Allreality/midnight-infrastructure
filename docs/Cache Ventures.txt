@@ -1,0 +1,15 @@
+Tailored one-page pitch / cover letter
+Akil Hashim
+Marlborough, MA (open to remote) · [email] · [phone] · GitHub / LinkedIn
+
+
+Dear Cache Ventures Hiring Team,
+I’m applying for Associate / Founder in Residence because I want to accelerate from building reproducible, mission-driven infrastructure to launching and scaling ventures with operator-grade discipline. I lead Total Reality Global and Black Art LLC, where I design modular systems, run end-to-end technical and product builds, and document reproducible onboarding for collaborators. I bring:
+• 	Cross-functional execution: I design and implement modular React + TypeScript front-ends, Python backends, and Docker-based simulation flows that ship reliable demos and proof-of-concept products.
+• 	Analytic fluency: I build repeatable financial and simulation models, adapt them between Python/Node/Docker runtimes, and use them to validate product-market fit and technical feasibility.
+• 	Founder-level ownership: I’ve set up domains, governance, credential rotation, and audit-grade traceability for open-source projects while negotiating registrar, DNSSEC, and hosting edge cases.
+• 	Network and hiring instincts: I recruit contractors and contributors across disciplines, create clear onboarding, and maintain audit logs so teams scale safely.
+I’m excited to work directly with Cache’s CEO on high-impact projects, help validate new ventures through rapid experiments, and transition into a co-founder or portfolio leadership role. I’m persistent, detail-oriented, and oriented to finishing the hard work that turns ideas into repeatable businesses.
+Thank you for considering my application. I’d value an interview to discuss how I can contribute to your deal flow, portfolio operations, and venture formation playbook.
+— Akil Hashim
+

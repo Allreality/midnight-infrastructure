@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subscribe - Midnight Infrastructure</title>
+    <style>
+        body { font-family: Arial; background: #0a0e27; color: #fff; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .tier-card {
+            background: #1a1f3a;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+        .price { font-size: 2.5em; color: #667eea; }
+        input { 
+            width: 100%; 
+            padding: 15px; 
+            margin: 10px 0; 
+            background: #0a0e27; 
+            border: 2px solid #667eea; 
+            color: #fff; 
+            border-radius: 8px; 
+        }
+        button {
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover { background: #764ba2; }
+        .success { background: #10b981; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .error { background: #ef4444; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .info { background: #3b82f6; padding: 15px; border-radius: 8px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌙 Subscribe to Midnight Infrastructure</h1>
+        
+        <div class="tier-card">
+            <h2>Professional Tier</h2>
+            <p class="price">500 ADA/month</p>
+            <ul>
+                <li>Full documentation access (135+ docs)</li>
+                <li>Compliance workflow templates</li>
+                <li>Priority API access (1000 calls/day)</li>
+                <li>Custom agent configurations</li>
+                <li>Priority support</li>
+            </ul>
+        </div>
+
+        <div class="tier-card">
+            <h2>Payment Instructions</h2>
+            <div class="info">
+                <strong>Step 1:</strong> Send 500 ADA to treasury address:<br>
+                <code id="treasuryAddress">Loading...</code>
+            </div>
+            <div class="info">
+                <strong>Step 2:</strong> Enter your wallet address and transaction hash below
+            </div>
+        </div>
+
+        <div class="tier-card">
+            <h2>Verify Payment</h2>
+            <input type="text" id="walletAddress" placeholder="Your Cardano wallet address (addr1...)">
+            <input type="text" id="txHash" placeholder="Transaction hash from payment">
+            <button onclick="verifyPayment()">Verify & Activate Subscription</button>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Load treasury address
+        async function loadTreasuryAddress() {
+            const res = await fetch('/api/payment/pricing');
+            const data = await res.json();
+            document.getElementById('treasuryAddress').textContent = data.treasury_address;
+        }
+
+        async function verifyPayment() {
+            const wallet = document.getElementById('walletAddress').value;
+            const txHash = document.getElementById('txHash').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!wallet || !txHash) {
+                resultDiv.innerHTML = '<div class="error">❌ Please enter both wallet address and transaction hash</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="info">⏳ Verifying payment on Cardano blockchain...</div>';
+
+            try {
+                const res = await fetch('/api/payment/verify', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        wallet_address: wallet,
+                        tx_hash: txHash
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.verified) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Payment Verified!<br>
+                            <strong>Tier:</strong> ${data.subscription.tier}<br>
+                            <strong>Expires:</strong> ${new Date(data.subscription.expires_at).toLocaleDateString()}<br>
+                            <strong>Amount:</strong> ${data.payment.amount_ada} ADA<br>
+                            <br>
+                            <a href="/static/knowledge.html" style="color:#fff">→ Access Knowledge Base</a>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        loadTreasuryAddress();
+    </script>
+</body>
+</html>
