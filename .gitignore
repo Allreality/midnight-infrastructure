@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+venv/
+*.log
+registry/
+.env
+.env
+midnight-key.pem
+midnight-service-account.json
+.next/
+node_modules/
