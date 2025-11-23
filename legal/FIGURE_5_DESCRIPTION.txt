@@ -1,0 +1,23 @@
+FIGURE 5 - Actual Deployed System Architecture
+
+[Describe this figure:]
+
+Components (Left to Right, Top to Bottom):
+1. Client Browser (Windows) → connects to WSL IP 172.24.187.115:5002
+2. Flask API Server (Port 5002) with 5 REST endpoints
+3. Knowledge Base Layer (132 documents, 26 categories)
+4. AI Agent System (4 agents: analyzer, researcher, orchestrator, connector)
+5. Midnight Blockchain Integration (planned - attestation, ZK proofs, x402)
+
+Data Flow:
+- Browser → API Server → Knowledge Base → AI Agents → Blockchain
+- Continuous monitoring loop: Agents → Knowledge Base → Gap Analysis → Remediation
+
+Key Metrics Shown:
+- 241.37 hours development time
+- 132 documents indexed
+- 27 NIST documents
+- 5/14 control families covered
+- 9/14 gaps identified
+
+This figure demonstrates reduction to practice with operational metrics.

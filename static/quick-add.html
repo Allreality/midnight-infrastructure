@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick Add - Midnight</title>
+    <style>
+        body { font-family: Arial; background: #0a0e27; color: #fff; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        textarea { width: 100%; min-height: 300px; padding: 15px; font-size: 14px; 
+                   background: #1a1f3a; color: #fff; border: 2px solid #667eea; 
+                   border-radius: 8px; margin: 10px 0; }
+        button { padding: 15px 40px; background: #667eea; color: white; border: none; 
+                 border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px; }
+        button:hover { background: #764ba2; }
+        .success { background: #10b981; padding: 15px; border-radius: 8px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌙 Quick Add Discord Content</h1>
+        <p>Paste Discord announcements about Midnight airdrop:</p>
+        <textarea id="content" placeholder="Paste Discord message here..."></textarea>
+        <button onclick="save()">💾 Save to Knowledge Base</button>
+        <button onclick="window.location='index.html'">🏠 Back to Home</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        async function save() {
+            const content = document.getElementById('content').value;
+            if (!content) { alert('Please paste content'); return; }
+            
+            const res = await fetch('/api/manual/discord', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ content, channel: 'discord' })
+            });
+            
+            const data = await res.json();
+            document.getElementById('result').innerHTML = 
+                `<div class="success">✅ Saved! Refresh Knowledge Base to see it.</div>`;
+            document.getElementById('content').value = '';
+        }
+    </script>
+</body>
+</html>

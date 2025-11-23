@@ -1,0 +1,48 @@
+{
+  "protocol": "x402",
+  "version": "0.1.0",
+  "description": "Midnight Infrastructure API for agent registration, CID provenance, and donation routing.",
+  "endpoints": {
+    "/api/agents/register": {
+      "method": "POST",
+      "description": "Registers an agent with role, wallet, and CID.",
+      "schema": {
+        "agent_id": "string",
+        "role": "string",
+        "wallet": "string",
+        "cid": "string"
+      }
+    },
+    "/api/cid/track": {
+      "method": "POST",
+      "description": "Tracks a CID with agent attribution and timestamp.",
+      "schema": {
+        "cid": "string",
+        "agent_id": "string"
+      }
+    },
+    "/api/donations/route": {
+      "method": "POST",
+      "description": "Routes donation payloads to designated treasury or multisig wallet.",
+      "schema": {
+        "donor_wallet": "string",
+        "amount": "number",
+        "token": "string",
+        "agent_id": "string",
+        "cid": "string"
+      }
+    }
+  },
+  "registry": {
+    "agents": "agentRegistry.json",
+    "projects": "projectRegistry.json"
+  },
+  "cid": {
+    "format": "IPFS",
+    "validation": "cidv1"
+  },
+  "wallet": {
+    "networks": ["Cardano", "Midnight"],
+    "formats": ["bech32", "addr_test"]
+  }
+}

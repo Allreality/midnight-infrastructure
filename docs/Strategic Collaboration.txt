@@ -1,0 +1,20 @@
+Subject: Strategic Collaboration: SEV-SNP Pilot for NIH Genomic Compliance
+
+Dear [AMD Contact or Partner Team],
+
+I’m leading a pilot deployment of hardware-enforced compliance infrastructure for NIH-controlled genomic data, aligned with NIST SP 800-171 and SBIR objectives.
+
+ Our architecture is built around AMD EPYC with SEV-SNP, leveraging its memory encryption and attestation capabilities to deliver reproducible, blockchain-backed compliance for multi-institutional research.
+
+We’re currently preparing a case study for NIH and SBIR Phase II. We’re seeking a SEV‑SNP test node for validation under a mutual NDA and can offer engineering feedback, co-branded validation materials, and a joint case study opportunity.
+
+In return, we’re happy to provide technical feedback, co-branded documentation, and visibility into a high-impact, regulated use case.
+
+We have a provisional patent pending covering key elements of our hardware-enforced compliance and attestation workflow.
+
+Would you be open to a brief call to explore this opportunity?
+
+Warm regards,
+Akil Hashim
+Founder, Total Reality Global / Midnight Infrastructure
+[Your contact info]

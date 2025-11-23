@@ -1,0 +1,32 @@
+🚀  Major Compact Milestone and Release
+
+Hey builders @here, we are excited to announce that the Compact language will be open sourced as a project of the Linux Foundation Decentralized Trust (LFDT). With the stewardship of LFDT, we will tap into the power of the open-source community to accelerate the development of privacy-preserving technologies. As part of this milestone, the Compact language name will be changed and now formally known as Minokawa, homage to the dragon-like bird in Phillipine mythology that eclipses the sun. 🐉
+
+This milestone comes with a fresh release of the language (Compact Language 0.17 → Minokawa Language 0.18) along with shipping the Compact Compiler 0.26.0. Over time, we will work towards changing the naming conventions of all Compact related tools to Minokawa to avoid any confusion. Thank you for bearing with us!
+
+🔑 Summary of Key Changes & Highlights:
+
+👉🏻Open-sourcing Compact as a Linux Foundation Distributed Trust project
+👉🏻Compact now known as Minokawa : Compact Language 0.17 to Minokawa Language 0.18
+👉🏻Minokawa Language 0.18 release: Improving the usability of tuples, vectors, and byte values
+👉🏻Compact Compiler 0.26 release: Bug fixes and compiler improvements
+
+🔑 Next Steps
+
+🛠️Join the conversation on Minokawa and understand the details of the language changes on Midnight’s Developer Forum: https://forum.midnight.network/c/updates/
+🛠️ To use the Compact Compiler 0.26, please ensure you use the Compact devtools to update the necessary components by running ‘compact update’ 
+🛠️Read the full release notes covering the new features in Minokawa Languages 0.18:https://docs.midnight.network/relnotes/compact/minokawa-0-18-26-0
+🛠️ Learn about the Linux Foundation Decentralized Trust partnership: https://www.lfdecentralizedtrust.org/blog/compact-smart-contract-language-is-now-minokawa-newest-lf-decentralized-trust-project
+
+ MIPs & the Preview Testnet
+Get the latest on the Midnight Preview Testnet, the new privacy-focused sidechain for Cardano.
+Learn about the introduction of MIPs (Midnight Improvement Proposals) and how they’ll shape the network’s future.
+
+ From Board to Contributor Framework
+The Community Board is evolving! Discover the new Contributor Framework — a clearer path to get involved, contribute directly, and drive Midnight’s growth.
+
+ RSVP & Join Live:
+ https://discord.com/events/1165826384975908924/1433096666717618287
+ Build. Learn. Hang out with the Midnight community. 
+
+ 

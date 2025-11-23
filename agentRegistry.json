@@ -1,0 +1,14 @@
+[
+  {
+    "agent_id": "akil-hashim",
+    "role": "architect",
+    "wallet": "addr1q9np4m2eg4xtr8kn6mvccwklpv6a7kxhq8uqkk45gpd2tz326xxqn233h4a3lf5yv3utg7lwlg0vheasx9zjvzyfy8kqs0gpcx",
+    "cid": "bafybeigdyr..."
+  },
+  {
+    "agent_id": "akil-hashim",
+    "role": "steward",
+    "wallet": "addr1q9np4m2eg4xtr8kn6mvccwklpv6a7kxhq8uqkk45gpd2tz326xxqn233h4a3lf5yv3utg7lwlg0vheasx9zjvzyfy8kqs0gpcx",
+    "cid": "bafybeigdyr..."
+  }
+]
