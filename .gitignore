@@ -32,3 +32,26 @@ __pycache__/
 .vscode/
 .idea/
 midnight-compliance-site/
+
+# AWS Credentials (CRITICAL)
+*.pem
+*.key
+*credentials*
+*aws*key*
+guardduty/
+sts/
+
+# API Keys and Secrets
+*.env
+.env.*
+*secret*
+*token*
+*api*key*
+
+# Twilio
+*twilio*
+*TWILIO*
+
+# All AWS CLI output
+aws/
+
