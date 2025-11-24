@@ -55,3 +55,34 @@ sts/
 # All AWS CLI output
 aws/
 
+
+# ========================================
+# AWS & Cloud Credentials (CRITICAL)
+# ========================================
+guardduty/
+sts/
+*credentials*
+*.pem
+*.key
+*aws*key*
+aws/
+.aws/
+
+# ========================================
+# API Keys and Secrets (CRITICAL)
+# ========================================
+*secret*
+*token*
+*api*key*
+*.env
+.env.*
+*twilio*
+*TWILIO*
+
+# ========================================
+# Security Files
+# ========================================
+*.p12
+*.jks
+*.keystore
+
