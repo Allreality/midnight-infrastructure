@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
+    <div class="container mx-auto p-8">
+        <div class="mb-8">
+            <h1 class="text-5xl font-bold text-white mb-2">📊 Midnight Analytics Dashboard</h1>
+            <p class="text-purple-200">Real-time business metrics and user insights</p>
+            <button onclick="refreshData()" class="mt-4 bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg">
+                🔄 Refresh Data
+            </button>
+        </div>
+
+        <!-- Key Metrics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                <div class="text-blue-300 text-sm mb-2">Total Events</div>
+                <div class="text-4xl font-bold text-white" id="totalEvents">0</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                <div class="text-green-300 text-sm mb-2">Total Revenue</div>
+                <div class="text-4xl font-bold text-white" id="totalRevenue">$0</div>
+                <div class="text-green-200 text-sm mt-1" id="totalRevenueSol">0 SOL</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                <div class="text-purple-300 text-sm mb-2">Unique Users</div>
+                <div class="text-4xl font-bold text-white" id="uniqueUsers">0</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                <div class="text-orange-300 text-sm mb-2">Conversion Rate</div>
+                <div class="text-4xl font-bold text-white" id="conversionRate">0%</div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Events by Type -->
+            <div class="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                <h3 class="text-2xl font-bold text-white mb-4">Events by Type</h3>
+                <canvas id="eventsChart"></canvas>
+            </div>
+
+            <!-- Service Popularity -->
+            <div class="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                <h3 class="text-2xl font-bold text-white mb-4">Service Popularity</h3>
+                <canvas id="servicesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Detailed Tables -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Event Breakdown -->
+            <div class="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                <h3 class="text-2xl font-bold text-white mb-4">Event Breakdown</h3>
+                <div id="eventBreakdown" class="space-y-2"></div>
+            </div>
+
+            <!-- Service Revenue -->
+            <div class="bg-white/10 backdrop-blur rounded-lg p-6 border border-white/20">
+                <h3 class="text-2xl font-bold text-white mb-4">Service Revenue</h3>
+                <div id="serviceRevenue" class="space-y-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5008/api/analytics';
+        let eventsChart, servicesChart;
+
+        async function loadAnalytics() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                updateMetrics(data);
+                updateCharts(data);
+                updateTables(data);
+            } catch (error) {
+                console.error('Failed to load analytics:', error);
+                alert('Failed to load analytics. Make sure payment API is running on port 5008.');
+            }
+        }
+
+        function updateMetrics(data) {
+            document.getElementById('totalEvents').textContent = data.total_events || 0;
+            document.getElementById('totalRevenue').textContent = '$' + (data.total_revenue?.usd || 0).toFixed(2);
+            document.getElementById('totalRevenueSol').textContent = (data.total_revenue?.sol || 0).toFixed(3) + ' SOL';
+            document.getElementById('uniqueUsers').textContent = data.unique_users || 0;
+            document.getElementById('conversionRate').textContent = data.conversion_rate || '0%';
+        }
+
+        function updateCharts(data) {
+            // Events by Type Chart
+            const eventsCtx = document.getElementById('eventsChart').getContext('2d');
+            if (eventsChart) eventsChart.destroy();
+            
+            const eventTypes = Object.keys(data.events_by_type || {});
+            const eventCounts = Object.values(data.events_by_type || {});
+            
+            eventsChart = new Chart(eventsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: eventTypes,
+                    datasets: [{
+                        data: eventCounts,
+                        backgroundColor: [
+                            '#3b82f6', '#8b5cf6', '#10b981', '#f59e0b',
+                            '#ef4444', '#06b6d4', '#ec4899'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#e9d5ff' }
+                        }
+                    }
+                }
+            });
+
+            // Service Popularity Chart
+            const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+            if (servicesChart) servicesChart.destroy();
+            
+            const serviceNames = Object.keys(data.service_popularity || {});
+            const serviceCounts = Object.values(data.service_popularity || {});
+            
+            servicesChart = new Chart(servicesCtx, {
+                type: 'bar',
+                data: {
+                    labels: serviceNames,
+                    datasets: [{
+                        label: 'Purchases',
+                        data: serviceCounts,
+                        backgroundColor: '#8b5cf6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#e9d5ff' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#e9d5ff' }
+                        },
+                        x: {
+                            ticks: { color: '#e9d5ff' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateTables(data) {
+            // Event Breakdown
+            const eventBreakdown = document.getElementById('eventBreakdown');
+            eventBreakdown.innerHTML = '';
+            
+            Object.entries(data.events_by_type || {}).forEach(([type, count]) => {
+                eventBreakdown.innerHTML += `
+                    <div class="flex justify-between items-center bg-white/5 rounded p-3">
+                        <span class="text-purple-200">${type.replace(/_/g, ' ')}</span>
+                        <span class="text-white font-bold">${count}</span>
+                    </div>
+                `;
+            });
+
+            // Service Revenue (mock - would need actual revenue per service)
+            const serviceRevenue = document.getElementById('serviceRevenue');
+            serviceRevenue.innerHTML = '';
+            
+            const servicePrices = {
+                'knowledge_search': 1.37,
+                'gap_analysis_quick': 5.00,
+                'full_documentation': 20.00,
+                'system_audit': 100.00,
+                'comprehensive_analysis': 50.00
+            };
+            
+            Object.entries(data.service_popularity || {}).forEach(([service, count]) => {
+                const revenue = (servicePrices[service] || 0) * count;
+                serviceRevenue.innerHTML += `
+                    <div class="flex justify-between items-center bg-white/5 rounded p-3">
+                        <span class="text-purple-200">${service.replace(/_/g, ' ')}</span>
+                        <span class="text-green-300 font-bold">$${revenue.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+        }
+
+        function refreshData() {
+            loadAnalytics();
+        }
+
+        // Load on page load
+        loadAnalytics();
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadAnalytics, 30000);
+    </script>
+</body>
+</html>

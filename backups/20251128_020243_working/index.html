@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight X402 - AI Agent Services</title>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.8.0/web3.min.js"></script>
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const API_BASE_URL = 'http://localhost:5008';
+
+        const getProvider = () => {
+            if ('phantom' in window) {
+                return window.phantom?.solana;
+            }
+            return null;
+        };
+
+        function App() {
+            const [wallet, setWallet] = useState(null);
+            const [connected, setConnected] = useState(false);
+            const [connecting, setConnecting] = useState(false);
+            const [paymentInProgress, setPaymentInProgress] = useState(false);
+            const [selectedService, setSelectedService] = useState(null);
+
+            const connectWallet = async () => {
+                const provider = getProvider();
+                if (!provider) {
+                    alert('Phantom wallet not installed!');
+                    return;
+                }
+                setConnecting(true);
+                try {
+                    const resp = await provider.connect();
+                    setWallet(resp.publicKey.toString());
+                    setConnected(true);
+                } catch (err) {
+                    alert('Failed to connect: ' + err.message);
+                } finally {
+                    setConnecting(false);
+                }
+            };
+
+            const disconnectWallet = async () => {
+                const provider = getProvider();
+                if (provider) await provider.disconnect();
+                setWallet(null);
+                setConnected(false);
+            };
+
+            const purchaseService = async (service) => {
+                if (!connected) {
+                    alert('Please connect your wallet first!');
+                    return;
+                }
+                setPaymentInProgress(true);
+                setSelectedService(service);
+
+                try {
+                    // Create payment request
+                    const paymentReq = await fetch(API_BASE_URL + '/api/create-payment-request', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            service_id: service.id,
+                            buyer_wallet: wallet,
+                            amount_sol: service.priceSol
+                        })
+                    });
+                    const paymentData = await paymentReq.json();
+
+                    if (paymentData.error) {
+                        throw new Error(paymentData.error);
+                    }
+
+                    // Get Solana connection and provider
+                    const provider = getProvider();
+                    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'), 'confirmed');
+
+                    // Get merchant wallet from splits
+                    const merchantSplit = paymentData.splits.find(s => s.recipient === 'merchant') || paymentData.splits[0];
+                    const amountLamports = Math.round(paymentData.amount_sol * 1e9);
+
+                    // Create transaction
+                    const transaction = new solanaWeb3.Transaction().add(
+                        solanaWeb3.SystemProgram.transfer({
+                            fromPubkey: new solanaWeb3.PublicKey(wallet),
+                            toPubkey: new solanaWeb3.PublicKey(merchantSplit.address),
+                            lamports: amountLamports
+                        })
+                    );
+
+                    transaction.feePayer = new solanaWeb3.PublicKey(wallet);
+                    const { blockhash } = await connection.getLatestBlockhash();
+                    transaction.recentBlockhash = blockhash;
+
+                    // Sign and send
+                    const signed = await provider.signTransaction(transaction);
+                    const signature = await connection.sendRawTransaction(signed.serialize());
+                    await connection.confirmTransaction(signature);
+
+                    // Verify payment
+                    const verifyResp = await fetch(API_BASE_URL + '/api/v1/payments/' + paymentData.payment_id + '/verify', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ tx_signature: signature })
+                    });
+                    const verifyData = await verifyResp.json();
+
+                    if (verifyData.verified) {
+                        window.location.href = 'fulfillment.html?payment_id=' + paymentData.payment_id + '&service=' + service.id;
+                    } else {
+                        throw new Error(verifyData.error || 'Payment verification failed');
+                    }
+
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    alert('Error: ' + error.message);
+                } finally {
+                    setPaymentInProgress(false);
+                    setSelectedService(null);
+                }
+            };
+
+            const services = [
+                {
+                    id: 'knowledge_search',
+                    name: 'Knowledge Base Search',
+                    icon: '🔍',
+                    price: '0.01 SOL',
+                    priceSol: 0.01,
+                    usd: '$1.37',
+                    desc: 'Query 169+ compliance documents instantly',
+                    features: ['Full-text search across NIST 800-171', 'Context-aware results', 'Instant response', 'Source attribution'],
+                    savings: 'vs $50-100 consultant call'
+                },
+                {
+                    id: 'gap_analysis_quick',
+                    name: 'Gap Analysis',
+                    icon: '📊',
+                    price: '0.037 SOL',
+                    priceSol: 0.037,
+                    usd: '$5',
+                    desc: 'Quick compliance gap assessment',
+                    features: ['Single NIST control family', 'Actionable recommendations', 'Midnight blockchain guide', 'AMD SEV-SNP enforcement'],
+                    savings: 'vs $500-1,500 traditional audit'
+                },
+                {
+                    id: 'full_documentation',
+                    name: 'Full Documentation',
+                    icon: '📄',
+                    price: '0.15 SOL',
+                    priceSol: 0.15,
+                    usd: '$20',
+                    desc: 'Complete compliance framework documentation',
+                    features: ['All 14 NIST 800-171 families', 'Implementation roadmap', 'Blockchain verification', 'Hardware-enforced security'],
+                    savings: 'vs $2,000-5,000 consultant docs'
+                }
+            ];
+
+            return (
+                <div className="container mx-auto px-4 py-8">
+                    {/* Header */}
+                    <div className="text-center mb-12">
+                        <h1 className="text-5xl font-bold text-white mb-4">AI Agent Services - Pay with SOL</h1>
+                        <p className="text-purple-300 text-xl">NIST SP 800-171 Compliance powered by Solana</p>
+                        
+                        {/* Wallet Connection */}
+                        <div className="mt-6">
+                            {!connected ? (
+                                <button
+                                    onClick={connectWallet}
+                                    disabled={connecting}
+                                    className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg text-lg"
+                                >
+                                    {connecting ? 'Connecting...' : '🔗 Connect Phantom Wallet'}
+                                </button>
+                            ) : (
+                                <div className="flex items-center justify-center gap-4">
+                                    <span className="text-green-400 font-mono">
+                                        ✅ {wallet.slice(0, 6)}...{wallet.slice(-4)}
+                                    </span>
+                                    <button
+                                        onClick={disconnectWallet}
+                                        className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm"
+                                    >
+                                        Disconnect
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Services Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        {services.map((service) => (
+                            <div key={service.id} className="bg-white/10 backdrop-blur rounded-xl p-6 border border-purple-500/30 hover:border-purple-500 transition-all">
+                                <div className="flex justify-between items-start mb-4">
+                                    <span className="text-4xl">{service.icon}</span>
+                                    <div className="text-right">
+                                        <div className="text-2xl font-bold text-white">{service.price}</div>
+                                        <div className="text-purple-300 text-sm">{service.usd}</div>
+                                    </div>
+                                </div>
+                                
+                                <h3 className="text-xl font-bold text-white mb-2">{service.name}</h3>
+                                <p className="text-gray-400 mb-4">{service.desc}</p>
+                                
+                                <ul className="text-sm text-gray-300 mb-4 space-y-1">
+                                    {service.features.map((f, i) => (
+                                        <li key={i}>• {f}</li>
+                                    ))}
+                                </ul>
+                                
+                                <div className="text-center text-orange-400 text-sm mb-4">
+                                    {service.savings}
+                                </div>
+                                
+                                <button
+                                    onClick={() => purchaseService(service)}
+                                    disabled={paymentInProgress}
+                                    className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 rounded-lg"
+                                >
+                                    {paymentInProgress && selectedService?.id === service.id
+                                        ? '⏳ Processing...'
+                                        : 'Purchase with SOL'}
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Footer */}
+                    <div className="text-center mt-12 text-purple-400">
+                        <p>Powered by X402 Protocol • Solana Devnet • Pay with SOL</p>
+                        <p className="mt-2">
+                            <a href="analytics-dashboard.html" className="hover:text-white">📊 Analytics</a>
+                        </p>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

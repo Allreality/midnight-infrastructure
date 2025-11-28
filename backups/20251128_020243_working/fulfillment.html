@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Fulfillment - Midnight X402</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .card-glow {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); }
+        }
+        .loading-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-2">🎉 Payment Confirmed!</h1>
+            <p class="text-purple-300">Your service is being prepared</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="flex flex-col items-center justify-center py-16">
+            <div class="w-24 h-24 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-6"></div>
+            <p class="text-xl text-purple-300">Loading your results...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden max-w-xl mx-auto">
+            <div class="bg-red-900/50 border border-red-500 rounded-xl p-8 text-center">
+                <div class="text-6xl mb-4">❌</div>
+                <h2 class="text-2xl font-bold mb-2">Error</h2>
+                <p id="errorMessage" class="text-red-300 mb-4">Something went wrong</p>
+                <a href="index.html" class="inline-block bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold">
+                    Back to Services
+                </a>
+            </div>
+        </div>
+
+        <!-- Fulfillment Content -->
+        <div id="fulfillmentContent" class="hidden">
+            <!-- Payment Info Card -->
+            <div class="max-w-2xl mx-auto mb-8">
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-purple-500/30 card-glow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 id="serviceName" class="text-2xl font-bold">Service Name</h2>
+                            <p id="serviceDesc" class="text-purple-300">Service description</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold text-green-400">✓ Paid</div>
+                            <p id="amountPaid" class="text-purple-300">0.00 SOL</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-purple-500/30 pt-4 mt-4">
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="text-purple-400">Payment ID:</span>
+                                <span id="paymentId" class="ml-2 font-mono">---</span>
+                            </div>
+                            <div>
+                                <span class="text-purple-400">Transaction:</span>
+                                <a id="txLink" href="#" target="_blank" class="ml-2 text-blue-400 hover:underline font-mono">View on Explorer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="max-w-4xl mx-auto">
+                <!-- Knowledge Search Results -->
+                <div id="knowledgeResults" class="hidden">
+                    <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-blue-500/30 mb-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-3xl mr-3">🔍</span> Knowledge Base Access
+                        </h3>
+                        <p class="text-gray-300 mb-6">You now have access to query 169+ NIST compliance documents.</p>
+                        
+                        <!-- Search Interface -->
+                        <div class="bg-black/30 rounded-lg p-4 mb-6">
+                            <label class="block text-purple-300 mb-2">Ask a compliance question:</label>
+                            <div class="flex gap-3">
+                                <input type="text" id="searchQuery" placeholder="e.g., What are the access control requirements?" 
+                                    class="flex-1 bg-white/10 border border-purple-500/50 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500">
+                                <button onclick="executeSearch()" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Search Results -->
+                        <div id="searchResults" class="hidden">
+                            <h4 class="font-semibold mb-3 text-purple-300">Results:</h4>
+                            <div id="searchResultsContent" class="bg-black/30 rounded-lg p-4 max-h-96 overflow-y-auto">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gap Analysis Results -->
+                <div id="gapResults" class="hidden">
+                    <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-purple-500/30 mb-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-3xl mr-3">📊</span> Gap Analysis Report
+                        </h3>
+                        
+                        <!-- Score Card -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                            <div class="bg-black/30 rounded-lg p-4 text-center">
+                                <div class="text-4xl font-bold text-yellow-400" id="complianceScore">72%</div>
+                                <div class="text-sm text-gray-400">Compliance Score</div>
+                            </div>
+                            <div class="bg-black/30 rounded-lg p-4 text-center">
+                                <div class="text-4xl font-bold text-red-400" id="criticalGaps">3</div>
+                                <div class="text-sm text-gray-400">Critical Gaps</div>
+                            </div>
+                            <div class="bg-black/30 rounded-lg p-4 text-center">
+                                <div class="text-4xl font-bold text-orange-400" id="highGaps">5</div>
+                                <div class="text-sm text-gray-400">High Priority</div>
+                            </div>
+                            <div class="bg-black/30 rounded-lg p-4 text-center">
+                                <div class="text-4xl font-bold text-yellow-400" id="mediumGaps">6</div>
+                                <div class="text-sm text-gray-400">Medium Priority</div>
+                            </div>
+                        </div>
+
+                        <!-- Gap List -->
+                        <div class="bg-black/30 rounded-lg p-4">
+                            <h4 class="font-semibold mb-3 text-purple-300">Identified Gaps:</h4>
+                            <div id="gapList" class="space-y-2">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Documentation Results -->
+                <div id="docResults" class="hidden">
+                    <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-green-500/30 mb-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-3xl mr-3">📄</span> Full Documentation Package
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-black/30 rounded-lg p-4">
+                                <h4 class="font-semibold mb-3 text-green-300">Package Contents:</h4>
+                                <ul class="space-y-2 text-gray-300">
+                                    <li>✅ All 14 NIST 800-171 Control Families</li>
+                                    <li>✅ Implementation Roadmap</li>
+                                    <li>✅ Policy Templates</li>
+                                    <li>✅ Blockchain Verification Guide</li>
+                                    <li>✅ Hardware-Enforced Security Guide</li>
+                                    <li>✅ AMD SEV-SNP Integration</li>
+                                </ul>
+                            </div>
+                            <div class="bg-black/30 rounded-lg p-4">
+                                <h4 class="font-semibold mb-3 text-green-300">Document Info:</h4>
+                                <div class="space-y-2 text-gray-300">
+                                    <p><span class="text-purple-400">Format:</span> PDF</p>
+                                    <p><span class="text-purple-400">Pages:</span> <span id="docPages">47</span></p>
+                                    <p><span class="text-purple-400">Generated:</span> <span id="docDate">Just now</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="downloadReport()" class="w-full bg-green-600 hover:bg-green-700 py-4 rounded-lg font-bold text-xl">
+                            📥 Download Full Report (PDF)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Access Token Section -->
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-purple-500/30">
+                    <h3 class="text-xl font-bold mb-4">🔑 API Access</h3>
+                    <p class="text-gray-300 mb-4">Use this token to access the service programmatically:</p>
+                    <div class="bg-black/50 rounded-lg p-4 font-mono text-sm break-all">
+                        <span class="text-purple-400">Token:</span> <span id="accessToken">---</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Valid for 24 hours from purchase</p>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center mt-8">
+                <a href="index.html" class="inline-block bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg font-semibold">
+                    ← Back to Services
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5008';
+        let currentPaymentId = null;
+        let currentServiceId = null;
+
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentId = urlParams.get('payment_id');
+        const serviceId = urlParams.get('service');
+
+        async function loadFulfillment() {
+            if (!paymentId) {
+                showError('No payment ID provided');
+                return;
+            }
+
+            currentPaymentId = paymentId;
+            currentServiceId = serviceId;
+
+            try {
+                // Fetch fulfillment data
+                const response = await fetch(`${API_BASE}/api/v1/fulfill/${paymentId}`);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to load fulfillment');
+                }
+
+                // Hide loading, show content
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('fulfillmentContent').classList.remove('hidden');
+
+                // Populate payment info
+                document.getElementById('paymentId').textContent = paymentId.slice(0, 20) + '...';
+                document.getElementById('accessToken').textContent = paymentId;
+
+                // Set service info based on type
+                if (serviceId?.includes('knowledge') || serviceId === 'nist_basic') {
+                    showKnowledgeResults(data);
+                } else if (serviceId?.includes('gap')) {
+                    showGapResults(data);
+                } else if (serviceId?.includes('full') || serviceId?.includes('doc')) {
+                    showDocResults(data);
+                } else {
+                    showKnowledgeResults(data); // Default
+                }
+
+                // Update amounts from payment data
+                if (data.payment) {
+                    document.getElementById('amountPaid').textContent = `${data.payment.amount_sol} SOL`;
+                    if (data.payment.tx_signature) {
+                        const txLink = document.getElementById('txLink');
+                        txLink.href = `https://explorer.solana.com/tx/${data.payment.tx_signature}?cluster=devnet`;
+                        txLink.textContent = data.payment.tx_signature.slice(0, 12) + '...';
+                    }
+                }
+
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('errorState').classList.remove('hidden');
+            document.getElementById('errorMessage').textContent = message;
+        }
+
+        function showKnowledgeResults(data) {
+            document.getElementById('serviceName').textContent = 'Knowledge Base Search';
+            document.getElementById('serviceDesc').textContent = 'Query 169+ NIST compliance documents';
+            document.getElementById('amountPaid').textContent = '0.01 SOL';
+            document.getElementById('knowledgeResults').classList.remove('hidden');
+        }
+
+        function showGapResults(data) {
+            document.getElementById('serviceName').textContent = 'Gap Analysis';
+            document.getElementById('serviceDesc').textContent = 'Compliance gap assessment';
+            document.getElementById('amountPaid').textContent = '0.037 SOL';
+            document.getElementById('gapResults').classList.remove('hidden');
+
+            // Populate gap data
+            if (data.data) {
+                document.getElementById('complianceScore').textContent = data.data.compliance_score + '%';
+                document.getElementById('criticalGaps').textContent = data.data.critical;
+                document.getElementById('highGaps').textContent = data.data.high;
+                document.getElementById('mediumGaps').textContent = data.data.medium;
+            }
+
+            // Sample gaps
+            const gaps = [
+                { severity: 'critical', title: 'AC-2: Account Management', desc: 'No automated account provisioning/deprovisioning' },
+                { severity: 'critical', title: 'IA-2: Multi-Factor Authentication', desc: 'MFA not enforced for all privileged accounts' },
+                { severity: 'critical', title: 'SC-28: Data-at-Rest Encryption', desc: 'Some databases lack encryption' },
+                { severity: 'high', title: 'AU-6: Audit Review', desc: 'Audit logs not reviewed regularly' },
+                { severity: 'high', title: 'CM-6: Configuration Settings', desc: 'Baseline configurations not documented' },
+            ];
+
+            const gapList = document.getElementById('gapList');
+            gapList.innerHTML = gaps.map(gap => `
+                <div class="flex items-center gap-3 p-2 rounded ${gap.severity === 'critical' ? 'bg-red-900/30' : 'bg-orange-900/30'}">
+                    <span class="px-2 py-1 rounded text-xs font-bold ${gap.severity === 'critical' ? 'bg-red-600' : 'bg-orange-600'}">${gap.severity.toUpperCase()}</span>
+                    <div>
+                        <div class="font-semibold">${gap.title}</div>
+                        <div class="text-sm text-gray-400">${gap.desc}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showDocResults(data) {
+            document.getElementById('serviceName').textContent = 'Full Documentation Package';
+            document.getElementById('serviceDesc').textContent = 'Complete NIST 800-171 compliance framework';
+            document.getElementById('amountPaid').textContent = '0.15 SOL';
+            document.getElementById('docResults').classList.remove('hidden');
+            document.getElementById('docDate').textContent = new Date().toLocaleString();
+        }
+
+        async function executeSearch() {
+            const query = document.getElementById('searchQuery').value;
+            if (!query) return;
+
+            const resultsDiv = document.getElementById('searchResults');
+            const contentDiv = document.getElementById('searchResultsContent');
+            
+            resultsDiv.classList.remove('hidden');
+            contentDiv.innerHTML = '<p class="text-purple-300">Searching...</p>';
+
+            // Simulate search results (connect to your actual agent API)
+            setTimeout(() => {
+                const results = [
+                    {
+                        title: 'NIST SP 800-171 - Access Control (AC)',
+                        excerpt: 'Organizations must limit system access to authorized users, processes, and devices. This includes implementing account management procedures...',
+                        source: 'NIST SP 800-171 Rev 2, Section 3.1'
+                    },
+                    {
+                        title: 'Access Control Policy Requirements',
+                        excerpt: 'The organization must establish and maintain baseline configurations and inventories of organizational systems...',
+                        source: 'NIST SP 800-171A, Assessment Procedures'
+                    },
+                    {
+                        title: 'Implementation Guide - Access Control',
+                        excerpt: 'Recommended implementation steps: 1) Define access control policies, 2) Implement role-based access, 3) Enable audit logging...',
+                        source: 'Midnight Compliance Framework'
+                    }
+                ];
+
+                contentDiv.innerHTML = results.map(r => `
+                    <div class="border-b border-purple-500/30 pb-3 mb-3 last:border-0">
+                        <h5 class="font-semibold text-blue-400">${r.title}</h5>
+                        <p class="text-gray-300 text-sm my-1">${r.excerpt}</p>
+                        <p class="text-xs text-purple-400">Source: ${r.source}</p>
+                    </div>
+                `).join('');
+            }, 1000);
+        }
+
+        function downloadReport() {
+            // In production, this would generate/download actual PDF
+            alert('📥 Downloading Full Documentation Package...\n\nIn production, this generates a comprehensive PDF report with all NIST 800-171 controls and implementation guidance.');
+            
+            // Trigger download simulation
+            const link = document.createElement('a');
+            link.href = `${API_BASE}/api/v1/download/${currentPaymentId}`;
+            link.download = `NIST-800-171-Report-${currentPaymentId}.pdf`;
+            link.click();
+        }
+
+        // Load on page ready
+        document.addEventListener('DOMContentLoaded', loadFulfillment);
+    </script>
+</body>
+</html>

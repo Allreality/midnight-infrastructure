@@ -1,5 +1,3 @@
-PATENT PENDING - U.S. Application No. 63/917,456
-
 # AWS CLI v2
 
 This bundle contains a built executable of the AWS CLI v2.

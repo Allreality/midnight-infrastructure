@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom Wallet Diagnostic Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-box {
+            background: #16213e;
+            border: 2px solid #0f3460;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .success { border-color: #00ff00; }
+        .error { border-color: #ff0000; }
+        .warning { border-color: #ffaa00; }
+        button {
+            background: #9d4edd;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover { background: #7b2cbf; }
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+        pre {
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .status {
+            font-weight: bold;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>👻 Phantom Wallet Diagnostic Test</h1>
+    <p>This page will help diagnose why Phantom wallet isn't connecting.</p>
+
+    <div id="diagnostics"></div>
+
+    <div class="test-box">
+        <h3>Manual Connection Test</h3>
+        <button id="connectBtn" onclick="testConnect()">Test Connect Wallet</button>
+        <button onclick="window.location.reload()">Refresh Page</button>
+        <div id="connectionResult"></div>
+    </div>
+
+    <script>
+        const diagnosticsDiv = document.getElementById('diagnostics');
+        const connectionResultDiv = document.getElementById('connectionResult');
+
+        function addTest(title, passed, details) {
+            const className = passed ? 'success' : 'error';
+            const symbol = passed ? '✅' : '❌';
+            const html = `
+                <div class="test-box ${className}">
+                    <div class="status">${symbol} ${title}</div>
+                    <pre>${details}</pre>
+                </div>
+            `;
+            diagnosticsDiv.innerHTML += html;
+        }
+
+        function addWarning(title, details) {
+            const html = `
+                <div class="test-box warning">
+                    <div class="status">⚠️ ${title}</div>
+                    <pre>${details}</pre>
+                </div>
+            `;
+            diagnosticsDiv.innerHTML += html;
+        }
+
+        window.addEventListener('load', () => {
+            console.log('Running Phantom wallet diagnostics...');
+
+            const hasPhantom = typeof window.phantom !== 'undefined';
+            addTest(
+                'Test 1: window.phantom exists',
+                hasPhantom,
+                hasPhantom 
+                    ? `window.phantom = ${JSON.stringify(Object.keys(window.phantom), null, 2)}`
+                    : 'window.phantom is undefined\n\nThis means Phantom extension is not injecting into the page.'
+            );
+
+            const hasPhantomSolana = window.phantom?.solana !== undefined;
+            addTest(
+                'Test 2: window.phantom.solana exists',
+                hasPhantomSolana,
+                hasPhantomSolana
+                    ? `window.phantom.solana properties:\n${JSON.stringify(Object.keys(window.phantom.solana), null, 2)}`
+                    : 'window.phantom.solana is undefined'
+            );
+
+            const isPhantom = window.phantom?.solana?.isPhantom === true;
+            addTest(
+                'Test 3: Phantom identification',
+                isPhantom,
+                isPhantom
+                    ? 'window.phantom.solana.isPhantom = true'
+                    : `window.phantom.solana.isPhantom = ${window.phantom?.solana?.isPhantom}`
+            );
+
+            const hasLegacySolana = typeof window.solana !== 'undefined';
+            if (hasLegacySolana) {
+                addWarning(
+                    'Test 4: Legacy window.solana detected',
+                    `window.solana exists (legacy location)\nwindow.solana.isPhantom = ${window.solana?.isPhantom}\n\nNote: Modern Phantom uses window.phantom.solana`
+                );
+            }
+
+            const protocol = window.location.protocol;
+            const isHTTP = protocol === 'http:' || protocol === 'https:';
+            addTest(
+                'Test 5: Page protocol',
+                isHTTP,
+                isHTTP
+                    ? `Protocol: ${protocol}\n\nGood! HTTP/HTTPS allows extension injection.`
+                    : `Protocol: ${protocol}\n\n⚠️ file:// protocol may prevent extension injection.\nUse a local web server instead (python -m http.server 8000)`
+            );
+
+            const windowKeys = Object.keys(window).filter(key => 
+                key.toLowerCase().includes('phantom') || 
+                key.toLowerCase().includes('solana')
+            );
+            if (windowKeys.length > 0) {
+                addWarning(
+                    'Test 6: Related window properties',
+                    `Found properties:\n${windowKeys.join('\n')}`
+                );
+            }
+
+            if (!hasPhantom) {
+                diagnosticsDiv.innerHTML += `
+                    <div class="test-box error">
+                        <h2>❌ DIAGNOSIS: Phantom Not Detected</h2>
+                        <h3>Possible causes:</h3>
+                        <ol>
+                            <li><strong>Extension not installed:</strong> Install from <a href="https://phantom.app/" target="_blank">phantom.app</a></li>
+                            <li><strong>Extension disabled:</strong> Check chrome://extensions/ and enable Phantom</li>
+                            <li><strong>Extension not loaded:</strong> Wait a few seconds and refresh the page</li>
+                            <li><strong>file:// protocol issue:</strong> Use local web server instead</li>
+                            <li><strong>Extension permissions:</strong> Make sure Phantom has permission to run on this page</li>
+                        </ol>
+                        <h3>Quick fixes to try:</h3>
+                        <ul>
+                            <li>Refresh this page (F5)</li>
+                            <li>Close and reopen your browser</li>
+                            <li>Disable/re-enable Phantom extension</li>
+                            <li>Run: <code>python -m http.server 8000</code> then open http://localhost:8000/phantom-test.html</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (!isPhantom) {
+                diagnosticsDiv.innerHTML += `
+                    <div class="test-box warning">
+                        <h2>⚠️ DIAGNOSIS: Phantom Partially Detected</h2>
+                        <p>window.phantom exists but identification failed.</p>
+                        <p>Try waiting a few seconds for Phantom to fully initialize, then click the test button below.</p>
+                    </div>
+                `;
+            } else {
+                diagnosticsDiv.innerHTML += `
+                    <div class="test-box success">
+                        <h2>✅ DIAGNOSIS: Phantom Detected Successfully!</h2>
+                        <p>Phantom wallet is properly installed and detected.</p>
+                        <p>You should be able to connect. Try the connection test below.</p>
+                    </div>
+                `;
+            }
+        });
+
+        setTimeout(() => {
+            const hasPhantomDelayed = window.phantom?.solana?.isPhantom === true;
+            if (hasPhantomDelayed) {
+                addWarning(
+                    'Delayed Detection Test',
+                    'Phantom detected after 2 second delay.\n\nThis is normal - Phantom takes time to inject.\nYour connection should work now.'
+                );
+            }
+        }, 2000);
+
+        async function testConnect() {
+            const btn = document.getElementById('connectBtn');
+            btn.disabled = true;
+            btn.textContent = 'Connecting...';
+            
+            connectionResultDiv.innerHTML = '<p>Attempting to connect...</p>';
+
+            try {
+                let provider = window.phantom?.solana;
+                
+                if (!provider && window.solana?.isPhantom) {
+                    provider = window.solana;
+                }
+
+                if (!provider) {
+                    throw new Error('Phantom provider not found. Please install Phantom wallet.');
+                }
+
+                console.log('Provider found:', provider);
+                console.log('Calling connect()...');
+
+                const resp = await provider.connect();
+                const publicKey = resp.publicKey.toString();
+
+                connectionResultDiv.innerHTML = `
+                    <div class="test-box success">
+                        <h3>✅ Connection Successful!</h3>
+                        <p><strong>Wallet Address:</strong></p>
+                        <pre>${publicKey}</pre>
+                        <p>Your wallet is properly connected! The main app should work now.</p>
+                    </div>
+                `;
+                
+                btn.textContent = 'Connected!';
+                btn.style.background = '#00ff00';
+
+            } catch (error) {
+                console.error('Connection error:', error);
+                connectionResultDiv.innerHTML = `
+                    <div class="test-box error">
+                        <h3>❌ Connection Failed</h3>
+                        <p><strong>Error:</strong></p>
+                        <pre>${error.message}\n\n${error.stack || ''}</pre>
+                        <p><strong>Error Code:</strong> ${error.code || 'N/A'}</p>
+                        <p>If you rejected the connection, try again and approve it.</p>
+                    </div>
+                `;
+                
+                btn.disabled = false;
+                btn.textContent = 'Try Again';
+            }
+        }
+    </script>
+</body>
+</html>

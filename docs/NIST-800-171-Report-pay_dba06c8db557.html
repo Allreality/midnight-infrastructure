@@ -1,0 +1,87 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>NIST SP 800-171 Compliance Report</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 40px; }
+                h1 { color: #6b46c1; }
+                h2 { color: #4a5568; border-bottom: 2px solid #6b46c1; padding-bottom: 10px; }
+                .header { background: #1a1a2e; color: white; padding: 20px; margin-bottom: 30px; }
+                .section { margin: 20px 0; padding: 15px; background: #f7fafc; border-radius: 8px; }
+                .critical { color: #e53e3e; font-weight: bold; }
+                .high { color: #dd6b20; font-weight: bold; }
+                table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
+                th { background: #6b46c1; color: white; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>NIST SP 800-171 Full Compliance Report</h1>
+                <p>Generated: 2025-11-28 07:31:23 UTC</p>
+                <p>Payment ID: pay_dba06c8db557108899c5256ce244a02d</p>
+            </div>
+            
+            <h2>Executive Summary</h2>
+            <div class="section">
+                <p><strong>Compliance Score:</strong> 72%</p>
+                <p><strong>Critical Gaps:</strong> <span class="critical">3</span></p>
+                <p><strong>High Priority:</strong> <span class="high">5</span></p>
+                <p><strong>Medium Priority:</strong> 6</p>
+            </div>
+            
+            <h2>Control Families Assessment</h2>
+            <table>
+                <tr><th>Control Family</th><th>Status</th><th>Score</th></tr>
+                <tr><td>3.1 Access Control (AC)</td><td class="critical">Gaps Found</td><td>65%</td></tr>
+                <tr><td>3.2 Awareness and Training (AT)</td><td>Compliant</td><td>90%</td></tr>
+                <tr><td>3.3 Audit and Accountability (AU)</td><td class="high">Needs Improvement</td><td>70%</td></tr>
+                <tr><td>3.4 Configuration Management (CM)</td><td class="high">Needs Improvement</td><td>68%</td></tr>
+                <tr><td>3.5 Identification and Authentication (IA)</td><td class="critical">Gaps Found</td><td>60%</td></tr>
+                <tr><td>3.6 Incident Response (IR)</td><td>Compliant</td><td>85%</td></tr>
+                <tr><td>3.7 Maintenance (MA)</td><td>Compliant</td><td>88%</td></tr>
+                <tr><td>3.8 Media Protection (MP)</td><td>Compliant</td><td>82%</td></tr>
+                <tr><td>3.9 Personnel Security (PS)</td><td>Compliant</td><td>92%</td></tr>
+                <tr><td>3.10 Physical Protection (PE)</td><td>Compliant</td><td>80%</td></tr>
+                <tr><td>3.11 Risk Assessment (RA)</td><td class="high">Needs Improvement</td><td>72%</td></tr>
+                <tr><td>3.12 Security Assessment (CA)</td><td>Compliant</td><td>78%</td></tr>
+                <tr><td>3.13 System and Communications Protection (SC)</td><td class="critical">Gaps Found</td><td>58%</td></tr>
+                <tr><td>3.14 System and Information Integrity (SI)</td><td>Compliant</td><td>75%</td></tr>
+            </table>
+            
+            <h2>Critical Gaps - Immediate Action Required</h2>
+            <div class="section">
+                <h3 class="critical">1. AC-2: Account Management</h3>
+                <p>No automated account provisioning/deprovisioning process in place.</p>
+                <p><strong>Recommendation:</strong> Implement automated IAM solution with role-based access control.</p>
+                
+                <h3 class="critical">2. IA-2: Multi-Factor Authentication</h3>
+                <p>MFA not enforced for all privileged accounts.</p>
+                <p><strong>Recommendation:</strong> Deploy MFA for all administrative and privileged access.</p>
+                
+                <h3 class="critical">3. SC-28: Data-at-Rest Encryption</h3>
+                <p>Some databases lack encryption at rest.</p>
+                <p><strong>Recommendation:</strong> Enable AES-256 encryption for all data stores.</p>
+            </div>
+            
+            <h2>Implementation Roadmap</h2>
+            <div class="section">
+                <p><strong>Phase 1 (0-30 days):</strong> Address critical gaps - MFA, encryption, account management</p>
+                <p><strong>Phase 2 (30-60 days):</strong> High priority items - Audit logging, configuration baselines</p>
+                <p><strong>Phase 3 (60-90 days):</strong> Medium priority - Documentation, training updates</p>
+            </div>
+            
+            <h2>Hardware-Enforced Security Recommendations</h2>
+            <div class="section">
+                <p><strong>AMD SEV-SNP Integration:</strong> Recommended for protecting CUI in memory</p>
+                <p><strong>Midnight Blockchain Verification:</strong> Use for compliance attestation and audit trails</p>
+            </div>
+            
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #6b46c1;">
+                <p><em>Report generated by Midnight X402 Compliance Platform</em></p>
+                <p><em>Total Reality Global - Akil Hashim</em></p>
+            </div>
+        </body>
+        </html>
+        
